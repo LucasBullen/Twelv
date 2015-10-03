@@ -56,6 +56,11 @@
       </p>
 
       <p>
+         <h2>API Error</h2>
+         The API creates error messages by returning a json object with a member "error" which contains a string. Example: {'error':'parameters required'}
+      </p>
+
+      <p>
          <h2>API Endpoints</h2>
          <?php
             class Endpoint {
