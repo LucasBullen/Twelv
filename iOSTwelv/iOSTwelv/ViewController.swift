@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+//main page elements
     //UIView used to hold images of friends invited to currently viewed event
     @IBOutlet weak var invitedFriends: UIView!
     //UITextView used to hold the descriptive text if any of the currently viewed event
@@ -21,7 +22,33 @@ class ViewController: UIViewController {
     @IBOutlet weak var hourHand: UIImageView!
     //UILable found at top of screen hosting important information and title of the currently viewed event
     @IBOutlet weak var topInfoBar: UILabel!
-
+//Create event elements
+    //the view that holds all the create event tools
+    @IBOutlet weak var createEvent: UIView!
+    //top label asking the user for questions
+    @IBOutlet weak var prompt: UILabel!
+    //view for holding the auto complete buttons
+    @IBOutlet weak var autoFill: UIView!
+    //typing field
+    @IBOutlet weak var input: UITextField!
+    //the bar holding the progress buttons that stays with the keyboard
+    @IBOutlet weak var bottomBar: UIView!
+    //to return to previous page
+    @IBOutlet weak var back: UIButton!
+    //to progress to next page
+    @IBOutlet weak var forward: UIButton!
+    //to finalize event create
+    @IBOutlet weak var finish: UIButton!
+    //view holding all the possible friends and groups to add
+    @IBOutlet weak var addFriends: UIView!
+    //scroll view holding all the possible groups to add
+    @IBOutlet weak var groupScroll: UIScrollView!
+    //scroll view holding all the possible friends to add
+    @IBOutlet weak var friendScroll: UIScrollView!
+    //text view for description input
+    @IBOutlet weak var descriptionInput: UITextView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -31,7 +58,20 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+//input funcitons
+    //holding down on the create new event button
+    @IBAction func newEventClick(sender: AnyObject) {
+    }
+    //clicking on the 4 buttons on base of page
+    @IBAction func changeViewClick(sender: AnyObject) {
+    }
+    //each keystrock on input to update autocompete
+    @IBAction func typingInput(sender: AnyObject) {
+    }
+    //clicking any of the three bottom buttons on the create new event page
+    @IBAction func bottomBarClick(sender: AnyObject) {
+    }
+    
+    
 }
 
