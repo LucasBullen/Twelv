@@ -4,4 +4,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="facebook_app_id">1062542667090263</string>
+    <string name="api_url">http://10.0.2.2/twelv/api/</string>
 </resources>

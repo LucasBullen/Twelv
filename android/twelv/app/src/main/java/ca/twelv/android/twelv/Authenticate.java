@@ -1,13 +1,12 @@
 package ca.twelv.android.twelv;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -16,6 +15,8 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONObject;
 
 public class Authenticate extends AppCompatActivity {
     LoginButton loginButton;
@@ -29,6 +30,41 @@ public class Authenticate extends AppCompatActivity {
         setContentView(R.layout.activity_authenticate);
 
         callbackManager = CallbackManager.Factory.create();
+
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("user_friends");
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                accessToken = loginResult.getAccessToken();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+
+            }
+        });
+
+        //JSONObject test = TwelvAPI.request(this, accessToken, "", new JSONObject());
+
+        final Context globalThis = this;
+
+        new TaskCallbackThread(new TaskCallbackThread.TaskCallback() {
+            @Override
+            public Object task() {
+                return TwelvAPI.request(globalThis, accessToken, "", new JSONObject());
+            }
+
+            @Override
+            public void callback(Object result) {
+                Log.d("twelvdebug", result.toString());
+            }
+        }).start();
     }
 
     @Override
@@ -57,31 +93,5 @@ public class Authenticate extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public View onCreateView(
-            LayoutInflater inflater,
-            ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.splash, container, false);
-
-        loginButton = (LoginButton) view.findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_friends");
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                accessToken = loginResult.getAccessToken();
-            }
-
-            @Override
-            public void onCancel() { }
-
-            @Override
-            public void onError(FacebookException exception) { }
-        });
-
-        return view;
     }
 }
