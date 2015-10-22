@@ -50,10 +50,7 @@ public class Authenticate extends AppCompatActivity {
             }
         });
 
-        //JSONObject test = TwelvAPI.request(this, accessToken, "", new JSONObject());
-
         final Context globalThis = this;
-
         new TaskCallbackThread(new TaskCallbackThread.TaskCallback() {
             @Override
             public Object task() {
