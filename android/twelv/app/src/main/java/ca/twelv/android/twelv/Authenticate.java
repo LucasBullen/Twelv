@@ -31,12 +31,14 @@ public class Authenticate extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 accessToken = loginResult.getAccessToken();
+                Log.d("twelvdebug", accessToken.getToken());
+                setContentView(R.layout.activity_home);
             }
 
             @Override
@@ -51,7 +53,7 @@ public class Authenticate extends AppCompatActivity {
         });
 
         final Context globalThis = this;
-        new TaskCallbackThread(new TaskCallbackThread.TaskCallback() {
+        new AsyncTaskCallback(new AsyncTaskCallback.TaskCallback() {
             @Override
             public Object task() {
                 return TwelvAPI.request(globalThis, accessToken, "", new JSONObject());

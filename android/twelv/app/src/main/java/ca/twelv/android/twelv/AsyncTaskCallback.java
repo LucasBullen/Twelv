@@ -1,6 +1,6 @@
 /*
 
- TaskCallbackThread
+ AsyncTaskCallback
 
  This class is used for making quick threads.
  The constructor takes a TaskCallback object which exists as a
@@ -29,12 +29,12 @@ package ca.twelv.android.twelv;
 
 import android.os.AsyncTask;
 
-public class TaskCallbackThread {
+public class AsyncTaskCallback {
     // Use to store the constructed callback class
     private TaskCallback taskCallback;
 
     // Constructor
-    public TaskCallbackThread(TaskCallback taskCallbackParam) {
+    public AsyncTaskCallback(TaskCallback taskCallbackParam) {
         taskCallback = taskCallbackParam;
     }
 
