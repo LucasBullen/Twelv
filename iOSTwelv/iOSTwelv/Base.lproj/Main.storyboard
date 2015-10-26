@@ -31,16 +31,18 @@
                                 <rect key="frame" x="0.0" y="476" width="92" height="92"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="92" id="NXq-nP-0lL"/>
                                     <constraint firstAttribute="width" constant="92" id="l7D-GX-yQC"/>
                                 </constraints>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.082649447023868561" green="0.075204648077487946" blue="0.020877519622445107" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="+">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.94117653369999998" green="0.15294118230000001" blue="0.11372549830000001" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="newEventClick:" destination="BYZ-38-t0r" eventType="touchDragInside" id="gnV-1z-B0v"/>
+                                    <outletCollection property="gestureRecognizers" destination="pcu-Lb-Bf1" appends="YES" id="sHA-Dr-rOD"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SAt-Dy-cxD" userLabel="groups">
@@ -410,12 +412,18 @@
                         <outlet property="input" destination="MMS-9d-Q7k" id="PFk-3R-zq3"/>
                         <outlet property="invitedFriends" destination="685-D5-Y96" id="Bnm-Hn-7Tv"/>
                         <outlet property="location" destination="YMP-uU-CQX" id="JJE-Sd-Aqb"/>
+                        <outlet property="mainView" destination="8bC-Xf-vdC" id="f8E-ka-uJF"/>
                         <outlet property="onClockTime" destination="iNf-Ly-8yi" id="s2L-aB-IaW"/>
                         <outlet property="prompt" destination="bUb-0J-fcN" id="92h-ba-rHf"/>
                         <outlet property="topInfoBar" destination="3J1-Lh-ysI" id="GXI-uj-OHr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="pcu-Lb-Bf1">
+                    <connections>
+                        <action selector="handlePan:" destination="BYZ-38-t0r" id="FLC-7W-Mdx"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="480" y="239"/>
         </scene>

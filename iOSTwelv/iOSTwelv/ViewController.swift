@@ -32,6 +32,7 @@ class ViewController: UIViewController {
     //typing field
     @IBOutlet weak var input: UITextField!
     //the bar holding the progress buttons that stays with the keyboard
+    @IBOutlet var mainView: UIView!
     @IBOutlet weak var bottomBar: UIView!
     //to return to previous page
     @IBOutlet weak var back: UIButton!
@@ -51,6 +52,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //add elements to the dragArray
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -60,9 +62,36 @@ class ViewController: UIViewController {
     }
 //input funcitons
     //holding down on the create new event button
-    @IBAction func newEventClick(sender: AnyObject) {
+    class dragSection{
+        var x: Int
+        var y: Int
+        var width: Int
+        var height: Int
+        var funcitonName: String
+        init (xIn: Int, yIn: Int, widthIn:Int, heightIn:Int, functionNameIn:String){
+            x=xIn
+            y=yIn
+            width=widthIn
+            height=heightIn
+            funcitonName=functionNameIn
+        }
+        func isIn(xLoc:Int,yLoc:Int){
+            if (xLoc >= x && xLoc <= x+width && yLoc>=y && yLoc <= y + height){
+                print("within\(funcitonName)");
+            }
+            
+        }
     }
-    //clicking on the 4 buttons on base of page
+    @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
+        let translation = recognizer.locationInView(self.view)
+        print("\(translation.x) and \(translation.y)")
+    }
+    
+    func checkDragLocation(x: Int, y: Int){
+        
+    }
+        //clicking on the 4 buttons on base of page
+    
     @IBAction func changeViewClick(sender: AnyObject) {
     }
     //each keystrock on input to update autocompete
