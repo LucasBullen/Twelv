@@ -51,12 +51,10 @@ public class Authenticate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        setContentView(R.layout.activity_authenticate);
 
         if (AccessToken.getCurrentAccessToken() == null) {
-            // Only set the view xml to show the login button
-            setContentView(R.layout.activity_authenticate);
-
-            // The user is not logged in
+            // The user is logged out
             callbackManager = CallbackManager.Factory.create();
 
             loginButton = (LoginButton) findViewById(R.id.login_button);
