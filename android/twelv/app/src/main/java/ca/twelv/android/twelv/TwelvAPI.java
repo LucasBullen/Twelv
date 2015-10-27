@@ -15,7 +15,6 @@
 package ca.twelv.android.twelv;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -34,14 +33,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class TwelvAPI {
+    // Hosted api url
+    private static String baseUrl = "http://lucasbullen.com/twelv/api/";
+
     // Used to request data from the server. Specify the app context,
     // the specific endpoint that you'd like to request data from,
     // and the params json given to the server
-    public static JSONObject request(Context context, String endpoint, JSONObject paramsObject) {
+    public static JSONObject request(String endpoint, JSONObject paramsObject) {
         // Avoid needing try/catches everytime you call the api
         try {
             // The constructed url string
-            String url = context.getString(R.string.api_url) + "?" + endpoint + "=";
+            String url = baseUrl + "?" + endpoint + "=";
             url += URLEncoder.encode(paramsObject.toString(), "utf-8");
             Log.d("twelvdebug", "URL : " + url);
             // Create a useful URL object representing the string url

@@ -1,6 +1,5 @@
 package ca.twelv.android.twelv;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +22,6 @@ public class Authenticate extends AppCompatActivity {
     CallbackManager callbackManager;
 
     private void onAccessToken(final AccessToken accessToken) {
-        final Context globalThis = this;
-
         new AsyncTaskCallback(new AsyncTaskCallback.TaskCallback() {
             @Override
             public Object task() {
@@ -36,7 +33,7 @@ public class Authenticate extends AppCompatActivity {
                 }
                 catch (JSONException e) { e.printStackTrace(); }
 
-                return TwelvAPI.request(globalThis, "session_create", params);
+                return TwelvAPI.request("session_create", params);
             }
 
             @Override
