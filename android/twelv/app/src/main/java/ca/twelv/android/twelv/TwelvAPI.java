@@ -17,8 +17,6 @@ package ca.twelv.android.twelv;
 import android.content.Context;
 import android.util.Log;
 
-import com.facebook.AccessToken;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,17 +24,19 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public class TwelvAPI {
     // Used to request data from the server. Specify the app context,
-    // the access token given by the login process, the specific
-    // endpoint that you'd like to request data from, and the params
-    // json given to the server
-    public static JSONObject request(Context context, AccessToken accessToken, String endpoint, JSONObject paramsObject) {
+    // the specific endpoint that you'd like to request data from,
+    // and the params json given to the server
+    public static JSONObject request(Context context, String endpoint, JSONObject paramsObject) {
         // Avoid needing try/catches everytime you call the api
         try {
             // The constructed url string
-            String url = context.getString(R.string.api_url) + "?" + endpoint + "=" + paramsObject.toString();
+            String url = context.getString(R.string.api_url) + "?" + endpoint + "=";
+            url += URLEncoder.encode(paramsObject.toString(), "utf-8");
+            Log.d("twelvdebug", "URL : " + url);
             // Create a useful URL object representing the string url
             URL obj = new URL(url);
             // Required to connect to the internet and send the data to the server
@@ -44,13 +44,14 @@ public class TwelvAPI {
 
             // Specify there are get variables set
             con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", "Mozilla/5.0"); //change
+            con.setRequestProperty("Content-Type", "text/plain");
+            con.setRequestProperty("charset", "utf-8");
 
             // HTTP response code used for debugging
             int responseCode = con.getResponseCode();
 
             // Debug info
-            Log.d("twelvdebug", "Sending 'GET' request to URL : " + url);
+            Log.d("twelvdebug", "Sending 'GET' request to URL : " + obj.toString());
             Log.d("twelvdebug", "Response Code : " + responseCode);
 
             // Create the appropriate streams in order to read the data

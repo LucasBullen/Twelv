@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,54 +15,68 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Authenticate extends AppCompatActivity {
     LoginButton loginButton;
     CallbackManager callbackManager;
-    AccessToken accessToken;
+
+    private void onAccessToken(final AccessToken accessToken) {
+        final Context globalThis = this;
+
+        new AsyncTaskCallback(new AsyncTaskCallback.TaskCallback() {
+            @Override
+            public Object task() {
+                JSONObject params = new JSONObject();
+
+                try {
+                    params.put("accesstoken", accessToken.getToken());
+                    params.put("facebookid", accessToken.getUserId());
+                }
+                catch (JSONException e) { e.printStackTrace(); }
+
+                return TwelvAPI.request(globalThis, "session_create", params);
+            }
+
+            @Override
+            public void callback(Object result) {
+                Intent homeIntent = new Intent(Authenticate.this, Home.class);
+                startActivity(homeIntent);
+            }
+        }).start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.activity_authenticate);
 
-        callbackManager = CallbackManager.Factory.create();
+        if (AccessToken.getCurrentAccessToken() == null) {
+            // Only set the view xml to show the login button
+            setContentView(R.layout.activity_authenticate);
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_friends");
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                accessToken = loginResult.getAccessToken();
-                Log.d("twelvdebug", accessToken.getToken());
-                setContentView(R.layout.activity_home);
-            }
+            // The user is not logged in
+            callbackManager = CallbackManager.Factory.create();
 
-            @Override
-            public void onCancel() {
+            loginButton = (LoginButton) findViewById(R.id.login_button);
+            loginButton.setReadPermissions("user_friends");
+            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    onAccessToken(loginResult.getAccessToken());
+                }
 
-            }
+                @Override
+                public void onCancel() { }
 
-            @Override
-            public void onError(FacebookException e) {
-
-            }
-        });
-
-        final Context globalThis = this;
-        new AsyncTaskCallback(new AsyncTaskCallback.TaskCallback() {
-            @Override
-            public Object task() {
-                return TwelvAPI.request(globalThis, accessToken, "", new JSONObject());
-            }
-
-            @Override
-            public void callback(Object result) {
-                Log.d("twelvdebug", result.toString());
-            }
-        }).start();
+                @Override
+                public void onError(FacebookException e) { }
+            });
+        } else {
+            // The user is logged in
+            onAccessToken(AccessToken.getCurrentAccessToken());
+        }
     }
 
     @Override
