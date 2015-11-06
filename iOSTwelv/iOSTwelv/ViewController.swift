@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate{
+
+
+class ViewController: UIViewController, UITextFieldDelegate {
 //main page elements
     //UIView used to hold images of friends invited to currently viewed event
     @IBOutlet weak var invitedFriends: UIView!
@@ -61,6 +63,8 @@ class ViewController: UIViewController, UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+               
         self.input.delegate = self;
         input.autocorrectionType = UITextAutocorrectionType.No
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -160,6 +164,27 @@ class ViewController: UIViewController, UITextFieldDelegate{
         hourHand.hidden = false
         onClockTime.hidden = true
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 
