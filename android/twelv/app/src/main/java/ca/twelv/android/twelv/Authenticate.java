@@ -1,8 +1,8 @@
 package ca.twelv.android.twelv;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,7 +17,7 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Authenticate extends AppCompatActivity {
+public class Authenticate extends Activity {
     LoginButton loginButton;
     CallbackManager callbackManager;
 
