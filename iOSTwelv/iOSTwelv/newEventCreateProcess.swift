@@ -24,15 +24,21 @@ extension ViewController{
         if currentSlide > totalSlides{
             createNewEvent()
         }
+        let userIn: String = input.text!
+        input.text = ""
+        print("progressNewEvent:\(currentSlide)")
         switch currentSlide{
         case 1:
+            eventTitle = userIn
             nameCreate()
         case 2:
             friendsCreate()
         case 3:
+            eventLocation = userIn
             locationCreate()
         default:
             createNewEvent()
+            currentSlide=1
         }
     }
     func createNewEvent(){
@@ -71,7 +77,6 @@ extension ViewController{
         prompt.hidden=false
     }
     func finishCreate(){
-        currentSlide = 1;
         createEvent.hidden=true
         self.view.endEditing(true)
     }

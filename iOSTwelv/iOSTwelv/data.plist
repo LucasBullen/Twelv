@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>event_info</key>
+	<dict>
+		<key>3</key>
+		<dict>
+			<key>location</key>
+			<string>loc3</string>
+			<key>title</key>
+			<string>title3</string>
+			<key>description</key>
+			<string>description3</string>
+			<key>start_time</key>
+			<string>2015-11-19 9:30:00</string>
+		</dict>
+		<key>2</key>
+		<dict>
+			<key>location</key>
+			<string>loc2</string>
+			<key>title</key>
+			<string>title2</string>
+			<key>description</key>
+			<string>description2</string>
+			<key>start_time</key>
+			<string>2015-11-19 6:30:00</string>
+		</dict>
+		<key>1</key>
+		<dict>
+			<key>location</key>
+			<string>loc1</string>
+			<key>title</key>
+			<string>title1</string>
+			<key>description</key>
+			<string>description1</string>
+			<key>start_time</key>
+			<string>2015-11-19 3:30:00</string>
+		</dict>
+		<key>0</key>
+		<dict>
+			<key>location</key>
+			<string>loc0</string>
+			<key>title</key>
+			<string>title0</string>
+			<key>description</key>
+			<string>description0</string>
+			<key>start_time</key>
+			<string>2015-11-19 12:30:00</string>
+		</dict>
+	</dict>
+	<key>user_info</key>
+	<dict>
+		<key>100000000001</key>
+		<dict>
+			<key>fb_id</key>
+			<string>111</string>
+			<key>name</key>
+			<string>name1</string>
+			<key>profile_picture</key>
+			<string>https://graph.facebook.com/838109535/picture?type=large</string>
+		</dict>
+		<key>100000000002</key>
+		<dict>
+			<key>fb_id</key>
+			<string>222</string>
+			<key>name</key>
+			<string>name2</string>
+			<key>profile_picture</key>
+			<string>https://graph.facebook.com/100001334225253/picture?type=large</string>
+		</dict>
+		<key>100000000003</key>
+		<dict>
+			<key>fb_id</key>
+			<string>333</string>
+			<key>name</key>
+			<string>name3</string>
+			<key>profile_picture</key>
+			<string>https://graph.facebook.com/100000263165920/picture?type=large</string>
+		</dict>
+		<key>100000000004</key>
+		<dict>
+			<key>fb_id</key>
+			<string>444</string>
+			<key>name</key>
+			<string>name4</string>
+			<key>profile_picture</key>
+			<string>https://graph.facebook.com/723736182/picture?type=large</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
