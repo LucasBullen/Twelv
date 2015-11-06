@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0AC02861BE5282C00BE65C2 /* dragTimeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC02851BE5282C00BE65C2 /* dragTimeSet.swift */; settings = {ASSET_TAGS = (); }; };
+		A0AC02881BE5306000BE65C2 /* newEventCreateProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC02871BE5306000BE65C2 /* newEventCreateProcess.swift */; settings = {ASSET_TAGS = (); }; };
 		A0AF99081BC0A96500F81B7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF99071BC0A96500F81B7E /* AppDelegate.swift */; };
 		A0AF990A1BC0A96500F81B7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF99091BC0A96500F81B7E /* ViewController.swift */; };
 		A0AF990D1BC0A96500F81B7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0AF990B1BC0A96500F81B7E /* Main.storyboard */; };
@@ -14,6 +16,7 @@
 		A0AF99121BC0A96500F81B7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0AF99101BC0A96500F81B7E /* LaunchScreen.storyboard */; };
 		A0AF991D1BC0A96500F81B7E /* iOSTwelvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF991C1BC0A96500F81B7E /* iOSTwelvTests.swift */; };
 		A0AF99281BC0A96500F81B7E /* iOSTwelvUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF99271BC0A96500F81B7E /* iOSTwelvUITests.swift */; };
+		A0EA21B61BDEB07A007E68A5 /* dragBuildObjects.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A0AC02851BE5282C00BE65C2 /* dragTimeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dragTimeSet.swift; sourceTree = "<group>"; };
+		A0AC02871BE5306000BE65C2 /* newEventCreateProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = newEventCreateProcess.swift; sourceTree = "<group>"; };
 		A0AF99041BC0A96500F81B7E /* iOSTwelv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSTwelv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0AF99071BC0A96500F81B7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0AF99091BC0A96500F81B7E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +52,7 @@
 		A0AF99231BC0A96500F81B7E /* iOSTwelvUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSTwelvUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0AF99271BC0A96500F81B7E /* iOSTwelvUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSTwelvUITests.swift; sourceTree = "<group>"; };
 		A0AF99291BC0A96500F81B7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = dragBuildObjects.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,9 @@
 				A0AF990E1BC0A96500F81B7E /* Assets.xcassets */,
 				A0AF99101BC0A96500F81B7E /* LaunchScreen.storyboard */,
 				A0AF99131BC0A96500F81B7E /* Info.plist */,
+				A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */,
+				A0AC02851BE5282C00BE65C2 /* dragTimeSet.swift */,
+				A0AC02871BE5306000BE65C2 /* newEventCreateProcess.swift */,
 			);
 			path = iOSTwelv;
 			sourceTree = "<group>";
@@ -228,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0EA21B61BDEB07A007E68A5 /* dragBuildObjects.strings in Resources */,
 				A0AF99121BC0A96500F81B7E /* LaunchScreen.storyboard in Resources */,
 				A0AF990F1BC0A96500F81B7E /* Assets.xcassets in Resources */,
 				A0AF990D1BC0A96500F81B7E /* Main.storyboard in Resources */,
@@ -255,6 +265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0AC02861BE5282C00BE65C2 /* dragTimeSet.swift in Sources */,
+				A0AC02881BE5306000BE65C2 /* newEventCreateProcess.swift in Sources */,
 				A0AF990A1BC0A96500F81B7E /* ViewController.swift in Sources */,
 				A0AF99081BC0A96500F81B7E /* AppDelegate.swift in Sources */,
 			);
@@ -483,6 +495,7 @@
 				A0AF992E1BC0A96500F81B7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0AF992F1BC0A96500F81B7E /* Build configuration list for PBXNativeTarget "iOSTwelvTests" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +504,7 @@
 				A0AF99311BC0A96500F81B7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0AF99321BC0A96500F81B7E /* Build configuration list for PBXNativeTarget "iOSTwelvUITests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +513,7 @@
 				A0AF99341BC0A96500F81B7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

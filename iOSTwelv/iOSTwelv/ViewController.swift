@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate{
 //main page elements
     //UIView used to hold images of friends invited to currently viewed event
     @IBOutlet weak var invitedFriends: UIView!
@@ -48,11 +48,25 @@ class ViewController: UIViewController {
     @IBOutlet weak var friendScroll: UIScrollView!
     //text view for description input
     @IBOutlet weak var descriptionInput: UITextView!
+    //holding down on the create new event button
+    @IBOutlet weak var bottomCreateBar: NSLayoutConstraint!
     
+    //newEventCreateProcess variables
+    var currentSlide: Int = 1
+    let totalSlides: Int = 3
+    let slidesRequired: Int = 2
+    var eventTitle: String = ""
+    var eventFriends = [String]()
+    var eventLocation: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //add elements to the dragArray
+        self.input.delegate = self;
+        input.autocorrectionType = UITextAutocorrectionType.No
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        //add all the locations where dragging will be affected
+        dragArray.append(dragSection(xIn: 0, yIn: Int(screenSize.height - 92), widthIn:92, heightIn:92, functionNameIn:"inNewEventButton"))
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -61,34 +75,34 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 //input funcitons
-    //holding down on the create new event button
-    class dragSection{
-        var x: Int
-        var y: Int
-        var width: Int
-        var height: Int
-        var funcitonName: String
-        init (xIn: Int, yIn: Int, widthIn:Int, heightIn:Int, functionNameIn:String){
-            x=xIn
-            y=yIn
-            width=widthIn
-            height=heightIn
-            funcitonName=functionNameIn
-        }
-        func isIn(xLoc:Int,yLoc:Int){
-            if (xLoc >= x && xLoc <= x+width && yLoc>=y && yLoc <= y + height){
-                print("within\(funcitonName)");
-            }
-            
-        }
-    }
+    
+    //starting the drag from create new event
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.locationInView(self.view)
-        print("\(translation.x) and \(translation.y)")
-    }
-    
-    func checkDragLocation(x: Int, y: Int){
-        
+        var accurracy: Int = 3
+        let x: Int = Int(translation.x)
+        let y: Int = Int(translation.y)
+        let vel: Int = Int(sqrt(pow(Double(abs(recognizer.velocityInView(self.view).x)),2) + pow(Double(abs(recognizer.velocityInView(self.view).y)),2)))
+        if vel > 250 {
+            accurracy = 1;
+        }else if vel > 180 {
+            accurracy = 2;        }
+        let act: String = drag().checkDragLocation(x,y:y, ac:accurracy)
+        if act == "inNewEventButton"{
+            inNewEventButton()
+        }else{
+            hourHand.hidden = true
+            onClockTime.hidden = false
+            onClockTime.text = "\(drag().time(x,y:y, ac:accurracy))"
+        }
+        //on lift off
+        if recognizer.state == UIGestureRecognizerState.Ended {
+            //must create new event
+            if act != "inNewEventButton"{
+                inNewEventButton()
+                nameCreate()
+            }
+        }
     }
         //clicking on the 4 buttons on base of page
     
@@ -99,8 +113,53 @@ class ViewController: UIViewController {
     }
     //clicking any of the three bottom buttons on the create new event page
     @IBAction func bottomBarClick(sender: AnyObject) {
+        switch sender.tag{
+        case 0:
+            progressNewEvent(-1)
+        case 1:
+            progressNewEvent(1)
+        case 2:
+            createNewEvent()
+        default: break
+        }
+        
+    }
+    /*
+    *closes the keyboard
+    */
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        progressNewEvent(1)
+        return false
     }
     
     
+    /*
+    *moves up the bottome bar
+    */
+    func textFieldDidBeginEditing(textField: UITextField) { // became first responder
+        bottomCreateBar.constant = 216
+    }
+    
+    /*
+    *moves down the bottom bar
+    */
+    func textFieldDidEndEditing(textField: UITextField) {
+        bottomCreateBar.constant = 0
+    }
+    
+    /*
+    *set highlight to textfield
+    */
+    func engageKeyboard(field: UITextField){
+        field.becomeFirstResponder()
+    }
+    
+    //dragging reactions
+    func inNewEventButton(){
+        hourHand.hidden = false
+        onClockTime.hidden = true
+    }
 }
+
 
