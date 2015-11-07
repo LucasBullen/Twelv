@@ -16,6 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class Home extends Activity {
 
     @Override
@@ -27,8 +30,8 @@ public class Home extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int width = size.x;
         int height = size.y;
+        int width = size.x;
 
         // Init screen buffer and paint object for drawing to it
         Paint paint = new Paint();
@@ -38,13 +41,23 @@ public class Home extends Activity {
         Canvas canvas = new Canvas(bitmapBuffer);
 
         // test drawing
+        float radius = width*0.8f/2;
+
         paint.setColor(Color.parseColor("#ffffff"));
         canvas.drawRect(0, 0, width, height, paint);
-
         paint.setColor(Color.parseColor("#CD5C5C"));
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(width/100);
-        canvas.drawCircle(width / 2, height/2, width*0.8f/2, paint);
+        paint.setStrokeWidth(width / 100);
+        canvas.drawCircle(width / 2, height/2, radius, paint);
+        //Dans Code
+        Calendar time = new GregorianCalendar(2013, 1, 28, 12, 0);
+        double pos [] = TwelvClock.getPos(time);
+        double x = pos[0]*radius + width/2;
+        double y = pos[1]*radius + height/2;
+
+        Log.d("twelvdebug", "circle = x: " + x + " y: " + y);
+
+        canvas.drawCircle((float)x, (float)y, width*0.8f/10, paint);
 
         // Setup layout for drawing
         LinearLayout layout = (LinearLayout) findViewById(R.id.rect);

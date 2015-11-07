@@ -1,8 +1,7 @@
 package ca.twelv.android.twelv;
 
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class TwelvClock {
@@ -24,14 +23,14 @@ public class TwelvClock {
 
     // returns the position on the clock
     // returns an array with the x cordinate and y coordinate respectively
-    public double[] getPos (Calendar time) {
-        double hour = time.get(Calendar.HOUR) % 12;
-        double min = (double) time.get(Calendar.MINUTE) / 60.0;
-        double sec = ((double) time.get(Calendar.SECOND) / 60.0) / 60.0;
-        double total = hour + min + sec;
+    public static double[] getPos (Calendar time) {
+        //double hour = time.get(Calendar.HOUR_OF_DAY) % 12;
+        //double min = (double) time.get(Calendar.MINUTE) / 60.0f;
+        //double sec = ((double) time.get(Calendar.SECOND) / 60.0) / 60.0;
+        double total = (360.0f/12.0f)*( (time.get(Calendar.HOUR) % 12) + time.get(Calendar.MINUTE)/60.0f );// + sec;
 
-        double x = Math.sin((2 * Math.PI / total));
-        double y = Math.cos((2 * Math.PI / total));
+        double x = Math.cos(Math.toRadians(total - 90));
+        double y = Math.sin(Math.toRadians(total - 90));
 
         return new double[]{x, y};
     }
