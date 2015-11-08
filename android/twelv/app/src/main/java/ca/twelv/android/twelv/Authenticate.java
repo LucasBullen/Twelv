@@ -3,6 +3,7 @@ package ca.twelv.android.twelv;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -66,7 +67,7 @@ public class Authenticate extends Activity {
                 public void onCancel() { }
 
                 @Override
-                public void onError(FacebookException e) { }
+                public void onError(FacebookException e) { Log.d("twelvdebug", e.getMessage()); }
             });
         } else {
             // The user is logged in

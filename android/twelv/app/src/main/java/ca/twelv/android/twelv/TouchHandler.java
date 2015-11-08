@@ -1,6 +1,5 @@
 package ca.twelv.android.twelv;
 
-import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,35 +8,82 @@ import java.util.ArrayList;
 
 // handles touch events
 public class TouchHandler implements View.OnTouchListener {
-    private static ArrayList<Entity> entities = new ArrayList<Entity>();
-    private LinearLayout layout;
+    private ArrayList<Trail> trails = new ArrayList<Trail>();
 
     public TouchHandler(LinearLayout layout){
-        this.layout = layout;
         layout.setOnTouchListener(this);
     }
+
+    // Add/Remove trails for checks
+    public void addTrail(Trail trail) { trails.add(trail); }
+    public void removeTrail(Trail trail) { trails.remove(trails.indexOf(trail)); }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int pointerCount = event.getPointerCount();
 
-        for (int i = 0; i < pointerCount; i++) {
-            int x = (int) event.getX(i);
-            int y = (int) event.getY(i);
+        // Leave this comment for debugging touch events
+        /*for (int i = 0; i < event.getPointerCount(); i++) {
+            int action = event.getActionMasked();
+            if (action == MotionEvent.ACTION_UP) Log.d("twelvdebug", "action_up");
+            if (action == MotionEvent.ACTION_DOWN) Log.d("twelvdebug", "action_down");
+            if (action == MotionEvent.ACTION_MOVE) Log.d("twelvdebug", "action_move");
+        }*/
 
-            for (int j = 0; j < TouchHandler.entities.size(); j++) {
-                if (TouchHandler.entities.get(j).isInside(x, y)) {
-                    // This needs to change based on the mouse event action
-                    TouchHandler.entities.get(j).pressed(event);
+        for (int i = 0; i < trails.size(); i++) {
+            trails.get(i).trackTrail(event);
+        }
+
+        return true;
+    }
+
+    public static abstract class Trail {
+        private Entity start;
+        private Entity finish;
+        private boolean isStarted;
+
+        public abstract void started(MotionEvent event);
+        public abstract void finished(MotionEvent event);
+        public abstract void moving(MotionEvent event);
+        public abstract void cancelled(MotionEvent event);
+
+        public Trail(Entity start, Entity finish) {
+            this.start = start;
+            this.finish = finish;
+            this.isStarted = false;
+        }
+
+        public void trackTrail(MotionEvent event) {
+            int pointerCount = event.getPointerCount();
+
+            for (int i = 0; i < pointerCount; i++) {
+                int x = (int) event.getX(i);
+                int y = (int) event.getY(i);
+                int action = event.getActionMasked();
+
+                if (action == MotionEvent.ACTION_DOWN && isStarted == false && start.isInside(x, y)) {
+                    isStarted = true;
+                    started(event);
+                }
+                else if (action == MotionEvent.ACTION_MOVE && isStarted) {
+                    moving(event);
+                }
+                else if (action == MotionEvent.ACTION_UP && isStarted) {
+                    if (finish.isInside(x, y)) {
+                        isStarted = false;
+                        finished(event);
+                    }
+                    else {
+                        isStarted = false;
+                        cancelled(event);
+                    }
                 }
             }
         }
-        return false;
     }
 
     // objects that are touchable
-    public static abstract class Entity {
-
+    public static class Entity {
         private double x, y, rad, width, height;
         private boolean isSquare;
 
@@ -46,9 +92,7 @@ public class TouchHandler implements View.OnTouchListener {
             this.x = x;
             this.y = y;
             this.rad = rad;
-            this.isSquare = false; // reduntant but matt likes
-
-            TouchHandler.entities.add(this);
+            this.isSquare = false;
         }
 
         // hit box for squares
@@ -58,31 +102,22 @@ public class TouchHandler implements View.OnTouchListener {
             this.width = width;
             this.height = height;
             this.isSquare = true;
-
-            TouchHandler.entities.add(this);
         }
 
-        public abstract void pressed(MotionEvent event);
-        public abstract void released(MotionEvent event);
-
-        // returns true if user touchs inside hit box
+        // returns true if user touches inside hit box
         public boolean isInside (double x2, double y2) {
-
             if (isSquare) {
-                if (Math.sqrt(Math.pow(x + x2, 2)) <= width / 2.0 &&
-                        Math.sqrt(Math.pow(y + y2, 2)) <= height / 2.0) {
+                if (Math.abs(x - x2) <= this.width / 2.0 &&
+                    Math.abs(y - y2) <= this.height / 2.0) {
+
                     return true;
                 }
             } else {
-                if (Math.sqrt(Math.pow(x + x2, 2) + Math.pow(y - y2, 2)) <= this.rad) {
+                if (Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2)) <= this.rad) {
                     return true;
                 }
             }
             return false;
         }
-
-
-
-
     }
 }

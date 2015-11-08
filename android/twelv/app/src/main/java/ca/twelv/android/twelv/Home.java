@@ -1,23 +1,14 @@
 package ca.twelv.android.twelv;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class Home extends Activity {
 
@@ -33,55 +24,33 @@ public class Home extends Activity {
         int height = size.y;
         int width = size.x;
 
-        // Init screen buffer and paint object for drawing to it
-        Paint paint = new Paint();
-        Bitmap bitmapBuffer = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-
-        // Init canvas object
-        Canvas canvas = new Canvas(bitmapBuffer);
-
-        // test drawing
-        float radius = width*0.8f/2;
-
-        paint.setColor(Color.parseColor("#ffffff"));
-        canvas.drawRect(0, 0, width, height, paint);
-        paint.setColor(Color.parseColor("#CD5C5C"));
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(width / 100);
-        canvas.drawCircle(width / 2, height/2, radius, paint);
-        //Dans Code
-        Calendar time = new GregorianCalendar(2013, 1, 28, 12, 0);
-        double pos [] = TwelvClock.getPos(time);
-        double x = pos[0]*radius + width/2;
-        double y = pos[1]*radius + height/2;
-
-        Log.d("twelvdebug", "circle = x: " + x + " y: " + y);
-
-        canvas.drawCircle((float)x, (float)y, width*0.8f/10, paint);
-
-        // Setup layout for drawing
+        // Setup a TwelvClock object
         LinearLayout layout = (LinearLayout) findViewById(R.id.rect);
-        layout.setBackgroundDrawable(new BitmapDrawable(bitmapBuffer));
+        TouchHandler clockTouchHandler = new TouchHandler(layout);
+        TwelvClock clock = new TwelvClock(clockTouchHandler, layout, width, height);
+        clock.repaint();
 
-        // Touch listener
-        layout.setOnTouchListener(new LinearLayout.OnTouchListener() {
+        // Test trail
+        TouchHandler.Entity myCircle = new TouchHandler.Entity(width/2, height/2, 200);
+        TouchHandler.Trail myTrail = new TouchHandler.Trail(myCircle, myCircle) {
+
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int pointerCount = event.getPointerCount();
-
-                for (int i = 0; i < pointerCount; i++) {
-                    int x = (int) event.getX(i);
-                    int y = (int) event.getY(i);
-                    int id = event.getPointerId(i);
-                    int action = event.getActionMasked();
-                    int actionIndex = event.getActionIndex();
-
-                    Log.d("twelvdebug", "Click: " + x + ": " + y);
-                }
-
-                return false;
+            public void started(MotionEvent event) {
+                Log.d("twelvdebug", "down");
             }
-        });
+
+            @Override
+            public void finished(MotionEvent event) {
+                Log.d("twelvdebug", "up");
+            }
+
+            @Override
+            public void moving(MotionEvent event) {}
+            @Override
+            public void cancelled(MotionEvent event) {}
+        };
+
+        clockTouchHandler.addTrail(myTrail);
     }
 
     @Override

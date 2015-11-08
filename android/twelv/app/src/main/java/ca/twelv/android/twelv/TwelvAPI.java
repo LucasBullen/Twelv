@@ -34,7 +34,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class TwelvAPI {
     // Hosted api url
-    private static String baseUrl = "http://lucasbullen.com/twelv/api/";
+    private static String baseUrl = "localhost/twelv/api/";//"http://lucasbullen.com/twelv/api/";
 
     // Used to request data from the server. Specify the app context,
     // the specific endpoint that you'd like to request data from,
