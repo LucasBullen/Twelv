@@ -7,12 +7,12 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class TwelvClock {
     // Stores all events
-    private List<TwelvEvent> events;
+    private ArrayList<TwelvEvent> events = new ArrayList<TwelvEvent>();
     private int width, height;
     private TouchHandler touchHandler;
     private Canvas canvas;
@@ -34,8 +34,20 @@ public class TwelvClock {
     public void repaint() {
         canvas.drawColor(Color.WHITE);
 
+        int rad = (width - 200) / 2;
+        int x = width/2;
+        int y = height/2;
+
         paint.setColor(Color.parseColor("#CD5C5C"));
-        canvas.drawCircle(width / 2, height / 2, 200, paint);
+        canvas.drawCircle(x, y, rad, paint);
+
+        paint.setColor(Color.parseColor("#000000"));
+
+        for (int i = 0; i < events.size(); i++) {
+            double[] pos = getPos(events.get(i));
+
+            canvas.drawCircle(x + (int) pos[0]*rad, y + (int) pos[1]*rad, 60, paint);
+        }
     }
 
     // returns the position on the clock
@@ -65,7 +77,7 @@ public class TwelvClock {
     // Used to store important event information
     public static class TwelvEvent {
         private Object name, friends, place;
-        private Calendar time;
+        public Calendar time;
 
         public TwelvEvent(Object name, Object friends, Object place, Calendar time) {
             this.name = name;

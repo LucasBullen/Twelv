@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 
+import java.util.GregorianCalendar;
+
 public class Home extends Activity {
 
     @Override
@@ -28,6 +30,10 @@ public class Home extends Activity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.rect);
         TouchHandler clockTouchHandler = new TouchHandler(layout);
         TwelvClock clock = new TwelvClock(clockTouchHandler, layout, width, height);
+        clock.addEvent(new TwelvClock.TwelvEvent("name", "friends", "place", new GregorianCalendar(2013,1,1,12,30)));
+        clock.addEvent(new TwelvClock.TwelvEvent("name", "friends", "place", new GregorianCalendar(2013,1,1,6,30)));
+        clock.addEvent(new TwelvClock.TwelvEvent("name", "friends", "place", new GregorianCalendar(2013,1,1,6,0)));
+        clock.addEvent(new TwelvClock.TwelvEvent("name", "friends", "place", new GregorianCalendar(2013,1,1,9,0)));
         clock.repaint();
 
         // Test trail
