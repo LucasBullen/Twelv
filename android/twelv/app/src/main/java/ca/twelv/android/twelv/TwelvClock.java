@@ -44,21 +44,21 @@ public class TwelvClock extends View {
                 clockEntity
         ) {
             @Override
-            public void started(MotionEvent event, int i) { /*Log.d("twelvdebug", "started");*/ }
+            public void started(MotionEvent event, int touchIndex) { /*Log.d("twelvdebug", "started");*/ }
 
             @Override
-            public void finished(MotionEvent event, int i) { /*Log.d("twelvdebug", "finished");*/ }
+            public void finished(MotionEvent event, int touchIndex) { /*Log.d("twelvdebug", "finished");*/ }
 
             @Override
-            public void moving(MotionEvent event, int i) {
+            public void moving(MotionEvent event, int touchIndex) {
                 //Log.d("twelvdebug", "moving");
-                nx = (int) event.getX(i);
-                ny = (int) event.getY(i);
+                nx = (int) event.getX(touchIndex);
+                ny = (int) event.getY(touchIndex);
                 invalidate();
             }
 
             @Override
-            public void cancelled(MotionEvent event, int i) { }
+            public void cancelled(MotionEvent event, int touchIndex) { }
         };
 
         this.touchHandler.addTrail(addEvent);
@@ -139,5 +139,29 @@ public class TwelvClock extends View {
             this.place = place;
             this.time = time;
         }
+    }
+
+    public abstract class DrawEntity {
+
+        private TouchHandler.Entity drawEntity;
+
+        public DrawEntity (TouchHandler.Entity drawEntity){
+            this.drawEntity = drawEntity;
+        }
+
+        public abstract void draw ();
+    }
+
+    public class Button {
+
+        private DrawEntity drawEntity;
+
+        public Button (DrawEntity drawEntity){
+            this.drawEntity = drawEntity;
+        }
+
+        
+
+
     }
 }
