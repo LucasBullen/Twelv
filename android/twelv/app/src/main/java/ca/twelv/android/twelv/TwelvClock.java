@@ -141,27 +141,55 @@ public class TwelvClock extends View {
         }
     }
 
-    public abstract class DrawEntity {
-
-        private TouchHandler.Entity drawEntity;
-
-        public DrawEntity (TouchHandler.Entity drawEntity){
-            this.drawEntity = drawEntity;
+    public abstract class DrawableEntity extends TouchHandler.Entity {
+        public DrawableEntity(double x, double y, double rad) {
+            super(x, y, rad);
         }
 
-        public abstract void draw ();
+        public DrawableEntity(int x, int y, int width, int height) {
+            super(x, y, width, height);
+        }
+
+        public abstract void draw(Canvas canvas, Paint paint);
     }
 
-    public class Button {
-
-        private DrawEntity drawEntity;
-
-        public Button (DrawEntity drawEntity){
-            this.drawEntity = drawEntity;
+    public abstract class Button extends DrawableEntity {
+        public Button(double x, double y, double rad, TouchHandler touchHandler) {
+            super(x, y, rad);
+            init(touchHandler);
         }
 
-        
+        public Button(int x, int y, int width, int height, TouchHandler touchHandler) {
+            super(x, y, width, height);
+            init(touchHandler);
+        }
 
+        public abstract void action();
 
+        private void init(TouchHandler touchHandler) {
+            touchHandler.addTrail(new TouchHandler.Trail(this, this) {
+                @Override
+                public void started(MotionEvent event, int touchIndex) {}
+
+                @Override
+                public void finished(MotionEvent event, int touchIndex) { action(); }
+
+                @Override
+                public void moving(MotionEvent event, int touchIndex) {}
+
+                @Override
+                public void cancelled(MotionEvent event, int touchIndex) {}
+            });
+        }
+
+        @Override
+        public void draw(Canvas canvas, Paint paint) {
+            if (this.isSquare) {
+                canvas.drawRect((int)(x + width/2), (int)(y + height/2), (int)(width), (int)(height), paint);
+            }
+            else {
+                canvas.drawCircle((int)(x), (int)(y), (int)(rad), paint);
+            }
+        }
     }
 }

@@ -20,10 +20,9 @@ public class TouchHandler implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        int pointerCount = event.getPointerCount();
-
         // Leave this comment for debugging touch events
-        /*for (int touchIndex = 0; touchIndex < event.getPointerCount(); touchIndex++) {
+        /* int pointerCount = event.getPointerCount();
+        for (int touchIndex = 0; touchIndex < event.getPointerCount(); touchIndex++) {
             int action = event.getActionMasked();
             if (action == MotionEvent.ACTION_UP) Log.d("twelvdebug", "action_up");
             if (action == MotionEvent.ACTION_DOWN) Log.d("twelvdebug", "action_down");
@@ -86,8 +85,8 @@ public class TouchHandler implements View.OnTouchListener {
 
     // objects that are touchable
     public static class Entity {
-        private double x, y, rad, width, height;
-        private boolean isSquare;
+        protected double x, y, rad, width, height;
+        protected boolean isSquare;
 
         // hit box for circles
         public Entity(double x, double y, double rad) {
