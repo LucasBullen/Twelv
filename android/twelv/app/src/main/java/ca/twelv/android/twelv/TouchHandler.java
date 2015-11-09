@@ -23,15 +23,15 @@ public class TouchHandler implements View.OnTouchListener {
         int pointerCount = event.getPointerCount();
 
         // Leave this comment for debugging touch events
-        /*for (int i = 0; i < event.getPointerCount(); i++) {
+        /*for (int touchIndex = 0; touchIndex < event.getPointerCount(); touchIndex++) {
             int action = event.getActionMasked();
             if (action == MotionEvent.ACTION_UP) Log.d("twelvdebug", "action_up");
             if (action == MotionEvent.ACTION_DOWN) Log.d("twelvdebug", "action_down");
             if (action == MotionEvent.ACTION_MOVE) Log.d("twelvdebug", "action_move");
         }*/
 
-        for (int i = 0; i < trails.size(); i++) {
-            trails.get(i).trackTrail(event);
+        for (int touchIndex = 0; touchIndex < trails.size(); touchIndex++) {
+            trails.get(touchIndex).trackTrail(event);
         }
 
         return true;
@@ -42,10 +42,11 @@ public class TouchHandler implements View.OnTouchListener {
         private Entity finish;
         private boolean isStarted;
 
-        public abstract void started(MotionEvent event, int i);
-        public abstract void finished(MotionEvent event, int i);
-        public abstract void moving(MotionEvent event, int i);
-        public abstract void cancelled(MotionEvent event, int i);
+        // touchIndex saves the index of an event
+        public abstract void started(MotionEvent event, int touchIndex);
+        public abstract void finished(MotionEvent event, int touchIndex);
+        public abstract void moving(MotionEvent event, int touchIndex);
+        public abstract void cancelled(MotionEvent event, int touchIndex);
 
         public Trail(Entity start, Entity finish) {
             this.start = start;
@@ -56,26 +57,27 @@ public class TouchHandler implements View.OnTouchListener {
         public void trackTrail(MotionEvent event) {
             int pointerCount = event.getPointerCount();
 
-            for (int i = 0; i < pointerCount; i++) {
-                int x = (int) event.getX(i);
-                int y = (int) event.getY(i);
+            for (int touchIndex = 0; touchIndex < pointerCount; touchIndex++) {
+                int x = (int) event.getX(touchIndex);
+                int y = (int) event.getY(touchIndex);
                 int action = event.getActionMasked();
 
+                // touch screen
                 if (action == MotionEvent.ACTION_DOWN && isStarted == false && start.isInside(x, y)) {
                     isStarted = true;
-                    started(event, i);
+                    started(event, touchIndex);
                 }
-                else if (action == MotionEvent.ACTION_MOVE && isStarted) {
-                    moving(event, i);
+                else if (action == MotionEvent.ACTION_MOVE && isStarted) { // drag
+                    moving(event, touchIndex);
                 }
-                else if (action == MotionEvent.ACTION_UP && isStarted) {
+                else if (action == MotionEvent.ACTION_UP && isStarted) { // remove touch
                     if (finish.isInside(x, y)) {
                         isStarted = false;
-                        finished(event, i);
+                        finished(event, touchIndex);
                     }
                     else {
                         isStarted = false;
-                        cancelled(event, i);
+                        cancelled(event, touchIndex);
                     }
                 }
             }
