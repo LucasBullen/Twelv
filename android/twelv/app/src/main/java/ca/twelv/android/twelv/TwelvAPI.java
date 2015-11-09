@@ -18,6 +18,8 @@ import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Base64;
 import android.util.Log;
 
@@ -130,5 +132,39 @@ public class TwelvAPI {
         Log.d("twelvdebug", "Key : " + key);
 
         return key;
+    }
+
+    public static abstract class BitmapCircleCrop extends AsyncTaskCallback.TaskCallback {
+        public abstract void callback(Bitmap bitmap);
+        private Bitmap bitmap;
+        private double size;
+
+        public BitmapCircleCrop(Bitmap bitmap, int size) {
+            this.size = size;
+            this.bitmap = Bitmap.createScaledBitmap(bitmap, size, size, true);
+
+            new AsyncTaskCallback(this).start();
+        }
+
+        @Override
+        public Object task() {
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    if (Math.sqrt(Math.pow(x - size/2, 2) + Math.pow(y - size/2, 2)) > size/2) {
+                        bitmap.setPixel(x, y, Color.TRANSPARENT);
+                    }
+                }
+            }
+
+            return bitmap;
+        }
+
+        @Override
+        public void callback(Object result) {
+            this.callback((Bitmap) result);
+        }
     }
 }
