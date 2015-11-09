@@ -42,10 +42,10 @@ public class TouchHandler implements View.OnTouchListener {
         private Entity finish;
         private boolean isStarted;
 
-        public abstract void started(MotionEvent event);
-        public abstract void finished(MotionEvent event);
-        public abstract void moving(MotionEvent event);
-        public abstract void cancelled(MotionEvent event);
+        public abstract void started(MotionEvent event, int i);
+        public abstract void finished(MotionEvent event, int i);
+        public abstract void moving(MotionEvent event, int i);
+        public abstract void cancelled(MotionEvent event, int i);
 
         public Trail(Entity start, Entity finish) {
             this.start = start;
@@ -63,19 +63,19 @@ public class TouchHandler implements View.OnTouchListener {
 
                 if (action == MotionEvent.ACTION_DOWN && isStarted == false && start.isInside(x, y)) {
                     isStarted = true;
-                    started(event);
+                    started(event, i);
                 }
                 else if (action == MotionEvent.ACTION_MOVE && isStarted) {
-                    moving(event);
+                    moving(event, i);
                 }
                 else if (action == MotionEvent.ACTION_UP && isStarted) {
                     if (finish.isInside(x, y)) {
                         isStarted = false;
-                        finished(event);
+                        finished(event, i);
                     }
                     else {
                         isStarted = false;
-                        cancelled(event);
+                        cancelled(event, i);
                     }
                 }
             }

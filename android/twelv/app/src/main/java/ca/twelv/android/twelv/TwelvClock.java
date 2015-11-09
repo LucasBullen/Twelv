@@ -1,37 +1,72 @@
 package ca.twelv.android.twelv;
 
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class TwelvClock {
+public class TwelvClock extends View {
     // Stores all events
     private ArrayList<TwelvEvent> events = new ArrayList<TwelvEvent>();
     private int width, height;
     private TouchHandler touchHandler;
-    private Canvas canvas;
     private Paint paint;
-    private Bitmap bitmapBuffer;
 
-    public TwelvClock(TouchHandler touchHandler, LinearLayout layout, int width, int height) {
+    // Test code for adding events START
+    private int nx = 0;
+    private int ny = 0;
+    private TouchHandler.Entity clockEntity;
+    // Test code for adding events FINISH
+
+    public TwelvClock(Context context, TouchHandler touchHandler, LinearLayout layout, int width, int height) {
+        super(context);
+        setFocusable(true);
+        setFocusableInTouchMode(true);
+
         this.touchHandler = touchHandler;
         this.width = width;
         this.height = height;
-
         this.paint = new Paint();
-        this.bitmapBuffer = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        this.canvas = new Canvas(this.bitmapBuffer);
 
-        layout.setBackgroundDrawable(new BitmapDrawable(this.bitmapBuffer));
+        this.setOnTouchListener(touchHandler);
+
+        // Test code for adding events START
+        this.clockEntity = new TouchHandler.Entity(this.width / 2, this.height / 2, width / 2);
+
+        TouchHandler.Trail addEvent = new TouchHandler.Trail(
+                new TouchHandler.Entity(60, this.height - 60, 60),
+                clockEntity
+        ) {
+            @Override
+            public void started(MotionEvent event, int i) { /*Log.d("twelvdebug", "started");*/ }
+
+            @Override
+            public void finished(MotionEvent event, int i) { /*Log.d("twelvdebug", "finished");*/ }
+
+            @Override
+            public void moving(MotionEvent event, int i) {
+                //Log.d("twelvdebug", "moving");
+                nx = (int) event.getX(i);
+                ny = (int) event.getY(i);
+                invalidate();
+            }
+
+            @Override
+            public void cancelled(MotionEvent event, int i) { }
+        };
+
+        this.touchHandler.addTrail(addEvent);
+        // Test code for adding events FINISH
     }
 
-    public void repaint() {
+    @Override
+    public void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
 
         int rad = (width - 200) / 2;
@@ -46,8 +81,27 @@ public class TwelvClock {
         for (int i = 0; i < events.size(); i++) {
             double[] pos = getPos(events.get(i));
 
-            canvas.drawCircle(x + (int) pos[0]*rad, y + (int) pos[1]*rad, 60, paint);
+            canvas.drawCircle(x + (int)(pos[0]*rad), y + (int)(pos[1]*rad), 60, paint);
         }
+
+        // Test code for adding events START
+        paint.setColor(Color.parseColor("#CD5C5C"));
+        canvas.drawCircle(60, height - 60, 60, paint);
+
+        int tx = nx;
+        int ty = ny;
+
+        if (clockEntity.isInside(tx, ty)) {
+            double gridAngle = 5*Math.PI/180;
+            double angle = Math.floor(Math.atan2(ny - height / 2, nx - width / 2)/gridAngle)*gridAngle;
+
+            tx = (int) (Math.cos(angle) * rad) + width / 2;
+            ty = (int) (Math.sin(angle) * rad) + height / 2;
+        }
+
+        paint.setColor(Color.parseColor("#000000"));
+        canvas.drawCircle(tx, ty, 60, paint);
+        // Test code for adding events FINISH
     }
 
     // returns the position on the clock
