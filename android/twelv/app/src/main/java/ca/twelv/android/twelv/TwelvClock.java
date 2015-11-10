@@ -1,6 +1,8 @@
 package ca.twelv.android.twelv;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,96 +14,180 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class TwelvClock extends View {
+    private final int clockRadius;
+    private final int eventRadius;
+    private final int strokeWidth;
+    private final int swidth, sheight;
+
     // Stores all events
     private ArrayList<TwelvEvent> events = new ArrayList<TwelvEvent>();
-    private int width, height;
     private TouchHandler touchHandler;
     private Paint paint;
 
-    // Test code for adding events START
-    private int nx = 0;
-    private int ny = 0;
-    private TouchHandler.Entity clockEntity;
-    // Test code for adding events FINISH
+    // Drawables
+    private ArrayList<DrawableEntity> drawables = new ArrayList<DrawableEntity>();
+    private DrawableEntity clock;
+    private DrawableEntity addEventButton;
+    private DrawableEntity newEvent;
+    private DrawableEntity emptyEvent;
 
-    public TwelvClock(Context context, TouchHandler touchHandler, LinearLayout layout, int width, int height) {
+    public TwelvClock(Context context, TouchHandler touchHandler, LinearLayout layout, final int swidth, int sheight) {
         super(context);
         setFocusable(true);
         setFocusableInTouchMode(true);
 
         this.touchHandler = touchHandler;
-        this.width = width;
-        this.height = height;
         this.paint = new Paint();
+
+        paint.setAntiAlias(true);
+        paint.setDither(true);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+
+        this.swidth = swidth;
+        this.sheight = sheight;
+        this.clockRadius = (int)(swidth*0.75/2f);
+        this.eventRadius = swidth/11;
+        this.strokeWidth = swidth/140;
 
         this.setOnTouchListener(touchHandler);
 
-        // Test code for adding events START
-        this.clockEntity = new TouchHandler.Entity(this.width / 2, this.height / 2, width / 2);
-
-        TouchHandler.Trail addEvent = new TouchHandler.Trail(
-                new TouchHandler.Entity(60, this.height - 60, 60),
-                clockEntity
-        ) {
+        // Init drawables
+        clock = new DrawableEntity(swidth/2, sheight/2, clockRadius) {
             @Override
-            public void started(MotionEvent event, int touchIndex) { /*Log.d("twelvdebug", "started");*/ }
+            public void draw(Canvas canvas, Paint paint) {
+                paint.setColor(Color.parseColor("#000000"));
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(strokeWidth);
+
+                canvas.drawCircle((int) x, (int) y, (int) rad, paint);
+
+                Calendar c = Calendar.getInstance();
+                double[] pos = getPos(c);
+
+                canvas.drawLine((float) x, (float) y, (float)(pos[0]*rad*0.8f + x), (float)(pos[1]*rad*0.8f + y), paint);
+
+                paint.setStyle(Paint.Style.FILL);
+            }
+        };
+
+        addEventButton = new DrawableEntity(100, sheight - 100, 200, 200) {
+            @Override
+            public void draw(Canvas canvas, Paint paint) {
+                paint.setColor(Color.parseColor("#000000"));
+                canvas.drawRect((float) (x - width / 2), (float) (y - height / 2), (float) (x + width / 2), (float) (y + height / 2), paint);
+
+                paint.setColor(Color.parseColor("#ffffff"));
+                paint.setTextSize(100);
+                canvas.drawText("+", (int) x, (int) y, paint);
+            }
+        };
+
+        newEvent = new DrawableEntity(-1000, -1000, eventRadius) {
+            @Override
+            public void draw(Canvas canvas, Paint paint) {
+                paint.setColor(Color.parseColor("#000000"));
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(strokeWidth);
+
+                canvas.drawCircle((int) x, (int) y, (int) rad, paint);
+
+                paint.setStyle(Paint.Style.FILL);
+            }
+        };
+
+        // Do not add to drawables
+        emptyEvent = new DrawableEntity(0, 0, eventRadius) {
+            // create empty bitmap
+            private Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+            TwelvAPI.BitmapCircleCrop loadImage = new TwelvAPI.BitmapCircleCrop(BitmapFactory.decodeResource(getResources(), R.drawable.temp), eventRadius*2) {
+                @Override
+                public void callback(Bitmap bitmap) {
+                    image = bitmap;
+                    invalidate();
+                }
+            };
 
             @Override
-            public void finished(MotionEvent event, int touchIndex) { /*Log.d("twelvdebug", "finished");*/ }
+            public void draw(Canvas canvas, Paint paint) {
+                paint.setAlpha(254);
+                canvas.drawBitmap(image, (int) (x - rad), (int) (y - rad), paint);
+                paint.setAlpha(255);
+
+                paint.setColor(Color.parseColor("#000000"));
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(strokeWidth);
+
+                canvas.drawCircle((int) x, (int) y, (int) rad, paint);
+
+                paint.setStyle(Paint.Style.FILL);
+            }
+        };
+
+        drawables.add(clock);
+        drawables.add(addEventButton);
+        drawables.add(newEvent);
+
+        // Init trails
+        touchHandler.addTrail(new TouchHandler.Trail(addEventButton, clock) {
+            @Override
+            public void started(MotionEvent event, int touchIndex) { }
+
+            @Override
+            public void finished(MotionEvent event, int touchIndex) {
+                /*
+
+                HANDLE CREATE EVENT HERE
+
+                */
+
+                cancelled(event, touchIndex);
+            }
 
             @Override
             public void moving(MotionEvent event, int touchIndex) {
-                //Log.d("twelvdebug", "moving");
-                nx = (int) event.getX(touchIndex);
-                ny = (int) event.getY(touchIndex);
+                double tx = event.getX(touchIndex);
+                double ty = event.getY(touchIndex);
+
+                if (clock.isInside(tx, ty)) {
+                    double gridAngle = 5*Math.PI/180;
+                    double angle = Math.round(Math.atan2(ty - clock.y, tx - clock.x)/gridAngle)*gridAngle;
+
+                    tx = (Math.cos(angle) * clockRadius) + clock.x;
+                    ty = (Math.sin(angle) * clockRadius) + clock.y;
+                }
+
+                newEvent.x = tx;
+                newEvent.y = ty;
+
                 invalidate();
             }
 
             @Override
-            public void cancelled(MotionEvent event, int touchIndex) { }
-        };
+            public void cancelled(MotionEvent event, int touchIndex) {
+                newEvent.x = -1000;
+                newEvent.y = -1000;
+                invalidate();
+            }
+        });
 
-        this.touchHandler.addTrail(addEvent);
-        // Test code for adding events FINISH
+        invalidate();
     }
 
     @Override
     public void onDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
 
-        int rad = (width - 200) / 2;
-        int x = width/2;
-        int y = height/2;
+        for (int i = 0, len = drawables.size(); i < len; i++) {
+            drawables.get(i).draw(canvas, paint);
+        }
 
-        paint.setColor(Color.parseColor("#CD5C5C"));
-        canvas.drawCircle(x, y, rad, paint);
-
-        paint.setColor(Color.parseColor("#000000"));
-
-        for (int i = 0; i < events.size(); i++) {
+        for (int i = 0, len = events.size(); i < len; i++) {
             double[] pos = getPos(events.get(i));
-
-            canvas.drawCircle(x + (int)(pos[0]*rad), y + (int)(pos[1]*rad), 60, paint);
+            emptyEvent.x = pos[0]*clockRadius + clock.x;
+            emptyEvent.y = pos[1]*clockRadius + clock.y;
+            emptyEvent.draw(canvas, paint);
         }
-
-        // Test code for adding events START
-        paint.setColor(Color.parseColor("#CD5C5C"));
-        canvas.drawCircle(60, height - 60, 60, paint);
-
-        int tx = nx;
-        int ty = ny;
-
-        if (clockEntity.isInside(tx, ty)) {
-            double gridAngle = 5*Math.PI/180;
-            double angle = Math.floor(Math.atan2(ny - height / 2, nx - width / 2)/gridAngle)*gridAngle;
-
-            tx = (int) (Math.cos(angle) * rad) + width / 2;
-            ty = (int) (Math.sin(angle) * rad) + height / 2;
-        }
-
-        paint.setColor(Color.parseColor("#000000"));
-        canvas.drawCircle(tx, ty, 60, paint);
-        // Test code for adding events FINISH
     }
 
     // returns the position on the clock
@@ -180,16 +266,6 @@ public class TwelvClock extends View {
                 @Override
                 public void cancelled(MotionEvent event, int touchIndex) {}
             });
-        }
-
-        @Override
-        public void draw(Canvas canvas, Paint paint) {
-            if (this.isSquare) {
-                canvas.drawRect((int)(x + width/2), (int)(y + height/2), (int)(width), (int)(height), paint);
-            }
-            else {
-                canvas.drawCircle((int)(x), (int)(y), (int)(rad), paint);
-            }
         }
     }
 }
