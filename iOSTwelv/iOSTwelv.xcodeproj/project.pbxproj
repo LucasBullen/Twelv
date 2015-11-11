@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0038F6C1BED09E800DB968D /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0038F6B1BED09E800DB968D /* data.plist */; settings = {ASSET_TAGS = (); }; };
-		A0038F701BED11F100DB968D /* plistBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0038F6F1BED11F100DB968D /* plistBrain.swift */; settings = {ASSET_TAGS = (); }; };
-		A0038F721BED1EC900DB968D /* user_event_rel.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0038F711BED1EC900DB968D /* user_event_rel.plist */; settings = {ASSET_TAGS = (); }; };
-		A0AC02861BE5282C00BE65C2 /* dragTimeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC02851BE5282C00BE65C2 /* dragTimeSet.swift */; settings = {ASSET_TAGS = (); }; };
-		A0AC02881BE5306000BE65C2 /* newEventCreateProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC02871BE5306000BE65C2 /* newEventCreateProcess.swift */; settings = {ASSET_TAGS = (); }; };
+		A0038F6C1BED09E800DB968D /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0038F6B1BED09E800DB968D /* data.plist */; };
+		A0038F701BED11F100DB968D /* plistBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0038F6F1BED11F100DB968D /* plistBrain.swift */; };
+		A0038F721BED1EC900DB968D /* user_event_rel.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0038F711BED1EC900DB968D /* user_event_rel.plist */; };
+		A0AC02861BE5282C00BE65C2 /* dragTimeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC02851BE5282C00BE65C2 /* dragTimeSet.swift */; };
+		A0AC02881BE5306000BE65C2 /* newEventCreateProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC02871BE5306000BE65C2 /* newEventCreateProcess.swift */; };
 		A0AF99081BC0A96500F81B7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF99071BC0A96500F81B7E /* AppDelegate.swift */; };
 		A0AF990A1BC0A96500F81B7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF99091BC0A96500F81B7E /* ViewController.swift */; };
 		A0AF990D1BC0A96500F81B7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0AF990B1BC0A96500F81B7E /* Main.storyboard */; };
@@ -19,7 +19,8 @@
 		A0AF99121BC0A96500F81B7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0AF99101BC0A96500F81B7E /* LaunchScreen.storyboard */; };
 		A0AF991D1BC0A96500F81B7E /* iOSTwelvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF991C1BC0A96500F81B7E /* iOSTwelvTests.swift */; };
 		A0AF99281BC0A96500F81B7E /* iOSTwelvUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF99271BC0A96500F81B7E /* iOSTwelvUITests.swift */; };
-		A0EA21B61BDEB07A007E68A5 /* dragBuildObjects.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */; settings = {ASSET_TAGS = (); }; };
+		A0C4EFB01BEFC79D001AA4F4 /* circlesLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */; };
+		A0EA21B61BDEB07A007E68A5 /* dragBuildObjects.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		A0AF99231BC0A96500F81B7E /* iOSTwelvUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSTwelvUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0AF99271BC0A96500F81B7E /* iOSTwelvUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSTwelvUITests.swift; sourceTree = "<group>"; };
 		A0AF99291BC0A96500F81B7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = circlesLoad.swift; sourceTree = "<group>"; };
 		A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = dragBuildObjects.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				A0038F6B1BED09E800DB968D /* data.plist */,
 				A0038F6F1BED11F100DB968D /* plistBrain.swift */,
 				A0038F711BED1EC900DB968D /* user_event_rel.plist */,
+				A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */,
 			);
 			path = iOSTwelv;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				A0AF990A1BC0A96500F81B7E /* ViewController.swift in Sources */,
 				A0038F701BED11F100DB968D /* plistBrain.swift in Sources */,
 				A0AF99081BC0A96500F81B7E /* AppDelegate.swift in Sources */,
+				A0C4EFB01BEFC79D001AA4F4 /* circlesLoad.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,7 +356,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lucas Bullen (Z69A568NY9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lucas Bullen (Z69A568NY9)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -397,7 +402,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Lucas Bullen (C7372EWRUV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lucas Bullen (C7372EWRUV)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -422,7 +428,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lucas Bullen (Z69A568NY9)";
 				INFOPLIST_FILE = iOSTwelv/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.twelv.iOSTwelv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -433,7 +441,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Lucas Bullen (C7372EWRUV)";
 				INFOPLIST_FILE = iOSTwelv/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.twelv.iOSTwelv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
