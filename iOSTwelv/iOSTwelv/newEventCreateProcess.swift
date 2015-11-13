@@ -61,7 +61,7 @@ extension ViewController{
         descriptionInput.hidden=true
         addFriends.hidden=false
         prompt.hidden=true
-        
+        fillWithUsers(friendScroll, users: accessPlist().all_users_get()!, function_name: "addUserToEvent:", event_id: "nil")
     }
     func locationCreate(){
         createEvent.hidden=false
@@ -75,5 +75,15 @@ extension ViewController{
         currentSlide = 1;
         createEvent.hidden=true
         self.view.endEditing(true)
+    }
+    func addUserToEvent(sender: AnyObject){
+        let userID = sender.titleLabel!!.text!
+        if let index = eventFriends.indexOf(userID) {
+            eventFriends.removeAtIndex(index)
+            sender.layer.borderColor = UIColor.blackColor().CGColor
+        }else{
+            eventFriends.append(userID)
+            sender.layer.borderColor = UIColor.greenColor().CGColor
+        }
     }
 }
