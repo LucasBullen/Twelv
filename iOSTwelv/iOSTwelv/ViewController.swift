@@ -77,6 +77,8 @@ class ViewController: UIViewController, UITextFieldDelegate{
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         //load page
         super.viewDidLoad()
+        
+               
         self.input.delegate = self;
         input.autocorrectionType = UITextAutocorrectionType.No
         let screenSize: CGRect = UIScreen.mainScreen().bounds
