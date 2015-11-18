@@ -13,8 +13,6 @@
 		013B56101BED19E10047ADD5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013B560D1BED19E10047ADD5 /* FBSDKLoginKit.framework */; };
 		013B56121BED3B940047ADD5 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013B56111BED3B940047ADD5 /* SplashViewController.swift */; };
 		013B56141BED3E370047ADD5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 013B56131BED3E370047ADD5 /* Default-568h@2x.png */; };
-		013BCC471BF580390032A4D8 /* user_event_rel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 013BCC461BF580390032A4D8 /* user_event_rel.plist */; };
-		01FE35431BF3B66800251603 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FE35421BF3B66800251603 /* SwiftyJSON.swift */; };
 		A0038F6C1BED09E800DB968D /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0038F6B1BED09E800DB968D /* data.plist */; };
 		A0038F701BED11F100DB968D /* plistBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0038F6F1BED11F100DB968D /* plistBrain.swift */; };
 		A0AC02861BE5282C00BE65C2 /* dragTimeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC02851BE5282C00BE65C2 /* dragTimeSet.swift */; };
@@ -27,6 +25,8 @@
 		A0AF991D1BC0A96500F81B7E /* iOSTwelvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF991C1BC0A96500F81B7E /* iOSTwelvTests.swift */; };
 		A0AF99281BC0A96500F81B7E /* iOSTwelvUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF99271BC0A96500F81B7E /* iOSTwelvUITests.swift */; };
 		A0C4EFB01BEFC79D001AA4F4 /* circlesLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */; };
+		A0C6F39D1BFCC5DD0003E323 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C6F39C1BFCC5DD0003E323 /* SwiftyJSON.swift */; };
+		A0C6F39F1BFCC5ED0003E323 /* user_event_rel.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0C6F39E1BFCC5ED0003E323 /* user_event_rel.plist */; };
 		A0EA21B61BDEB07A007E68A5 /* dragBuildObjects.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */; };
 /* End PBXBuildFile section */
 
@@ -54,8 +54,6 @@
 		013B560D1BED19E10047ADD5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "FacebookSDKs-iOS-20151026/FBSDKLoginKit.framework"; sourceTree = SOURCE_ROOT; };
 		013B56111BED3B940047ADD5 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		013B56131BED3E370047ADD5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		013BCC461BF580390032A4D8 /* user_event_rel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = user_event_rel.plist; path = ../../../Downloads/user_event_rel.plist; sourceTree = "<group>"; };
-		01FE35421BF3B66800251603 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = "../../../Downloads/devdactic-rest/SwiftyJSON.swift"; sourceTree = "<group>"; };
 		A0038F6B1BED09E800DB968D /* data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = data.plist; sourceTree = "<group>"; };
 		A0038F6F1BED11F100DB968D /* plistBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = plistBrain.swift; sourceTree = "<group>"; };
 		A0AC02851BE5282C00BE65C2 /* dragTimeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dragTimeSet.swift; sourceTree = "<group>"; };
@@ -74,6 +72,8 @@
 		A0AF99271BC0A96500F81B7E /* iOSTwelvUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSTwelvUITests.swift; sourceTree = "<group>"; };
 		A0AF99291BC0A96500F81B7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = circlesLoad.swift; sourceTree = "<group>"; };
+		A0C6F39C1BFCC5DD0003E323 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		A0C6F39E1BFCC5ED0003E323 /* user_event_rel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user_event_rel.plist; sourceTree = "<group>"; };
 		A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = dragBuildObjects.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,7 +134,7 @@
 				013B560D1BED19E10047ADD5 /* FBSDKLoginKit.framework */,
 				A0AF99071BC0A96500F81B7E /* AppDelegate.swift */,
 				A0AF99091BC0A96500F81B7E /* ViewController.swift */,
-				01FE35421BF3B66800251603 /* SwiftyJSON.swift */,
+				A0C6F39C1BFCC5DD0003E323 /* SwiftyJSON.swift */,
 				010BAEEE1BF1BD59001FC0C8 /* TwelvApi.swift */,
 				013B56111BED3B940047ADD5 /* SplashViewController.swift */,
 				A0AF990B1BC0A96500F81B7E /* Main.storyboard */,
@@ -146,7 +146,7 @@
 				A0AC02871BE5306000BE65C2 /* newEventCreateProcess.swift */,
 				A0038F6B1BED09E800DB968D /* data.plist */,
 				A0038F6F1BED11F100DB968D /* plistBrain.swift */,
-				013BCC461BF580390032A4D8 /* user_event_rel.plist */,
+				A0C6F39E1BFCC5ED0003E323 /* user_event_rel.plist */,
 				A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */,
 			);
 			path = iOSTwelv;
@@ -273,7 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				013BCC471BF580390032A4D8 /* user_event_rel.plist in Resources */,
+				A0C6F39F1BFCC5ED0003E323 /* user_event_rel.plist in Resources */,
 				A0038F6C1BED09E800DB968D /* data.plist in Resources */,
 				A0EA21B61BDEB07A007E68A5 /* dragBuildObjects.strings in Resources */,
 				A0AF99121BC0A96500F81B7E /* LaunchScreen.storyboard in Resources */,
@@ -307,10 +307,10 @@
 				A0AC02861BE5282C00BE65C2 /* dragTimeSet.swift in Sources */,
 				A0AC02881BE5306000BE65C2 /* newEventCreateProcess.swift in Sources */,
 				A0AF990A1BC0A96500F81B7E /* ViewController.swift in Sources */,
+				A0C6F39D1BFCC5DD0003E323 /* SwiftyJSON.swift in Sources */,
 				A0038F701BED11F100DB968D /* plistBrain.swift in Sources */,
 				A0AF99081BC0A96500F81B7E /* AppDelegate.swift in Sources */,
 				013B56121BED3B940047ADD5 /* SplashViewController.swift in Sources */,
-				01FE35431BF3B66800251603 /* SwiftyJSON.swift in Sources */,
 				010BAEEF1BF1BD59001FC0C8 /* TwelvApi.swift in Sources */,
 				A0C4EFB01BEFC79D001AA4F4 /* circlesLoad.swift in Sources */,
 			);
