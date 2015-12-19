@@ -11,20 +11,24 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 
 class SplashViewController: UIViewController ,FBSDKLoginButtonDelegate {
+    override func viewDidAppear(animated: Bool) {
+        //check if user is connected to internet, if not skip to home
+        if ((!Reachability().isConnectedToNetwork()) && (accessPlist().owner_get("twelv_id") != nil)){
+            ViewController().is_online = false
+            let controller = storyboard?.instantiateViewControllerWithIdentifier("main") as! ViewController
+            presentViewController(controller, animated: true, completion: nil)
+        }
+        if (FBSDKAccessToken.currentAccessToken() == nil){
+            print("Not logged in..")
+        } else {
+            prepLogin()
+        }
 
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // start of Facebook implamintation
-        
-        if (FBSDKAccessToken.currentAccessToken() == nil){
-            
-            print("Not logged in..")
-        } else {
-            
-            print("Logged in..")
-        }
-        
         let loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["public_profile","email","user_friends"]
         loginButton.center = self.view.center
@@ -44,25 +48,11 @@ class SplashViewController: UIViewController ,FBSDKLoginButtonDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    //MARK: - Facebook Login
-    
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         
         if error == nil{
-            
             print("Login complete.")
-            self.performSegueWithIdentifier("showNew", sender: self)
+            prepLogin()
             
         } else {
             
@@ -75,8 +65,12 @@ class SplashViewController: UIViewController ,FBSDKLoginButtonDelegate {
         print("User loged out...")
     }
     
-    
-    
-    
-
+    func prepLogin(){
+        print("logged into facebook")
+        twelvApi().setFacebookUserData()
+        accessPlist().owner_edit("access_token", value: FBSDKAccessToken.currentAccessToken().tokenString)
+        
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("main") as! ViewController
+        presentViewController(controller, animated: true, completion: nil)
+    }
 }

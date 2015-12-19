@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     //UILable found at top of screen hosting important information and title of the currently viewed event
     @IBOutlet weak var topInfoBar: UILabel!
     
+    @IBOutlet weak var minuteHand: UIImageView!
 //Create event elements
     //the view that holds all the create event tools
     @IBOutlet weak var createEvent: UIView!
@@ -54,6 +55,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     //holding down on the create new event button
     @IBOutlet weak var bottomCreateBar: NSLayoutConstraint!
     
+    @IBOutlet weak var smallInfoView: UIView!
 //Event info elements
     @IBOutlet weak var eventFullInfo: UIView!
     @IBOutlet weak var titleFull: UILabel!
@@ -62,14 +64,20 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var descriptionFull: UITextView!
     @IBOutlet weak var friendsFull: UIScrollView!
 //newEventCreateProcess variables
+    var eventTitle: String = ""
+    var eventTime: String = "2015-11-19 19:40:27"
+    var eventDescription: String = ""
+    var eventFriends = [String]()
+    var eventLocation: String = ""
+//global variables
     var currentSlide: Int = 1
     let totalSlides: Int = 3
     let slidesRequired: Int = 2
-    var eventTitle: String = ""
-    var eventFriends = [String]()
-    var eventLocation: String = ""
+    var is_online = true
+    var theTimer:NSTimer?
     
     override func viewDidLoad() {
+
         //notification
         UIApplication.sharedApplication().registerForRemoteNotifications()
         //code for the agree popup
@@ -84,11 +92,24 @@ class ViewController: UIViewController, UITextFieldDelegate{
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         //add all the locations where dragging will be affected
         dragArray.append(dragSection(xIn: 0, yIn: Int(screenSize.height - 92), widthIn:92, heightIn:92, functionNameIn:"inNewEventButton"))
-        dragArray.append(dragSection(xIn: (Int(clockFace.frame.midX)-Int(clockFace.frame.width/2)), yIn: (Int(clockFace.frame.midY)-Int(clockFace.frame.height/2)), widthIn:Int(clockFace.frame.width/2), heightIn:Int(clockFace.frame.height/2), functionNameIn:"inFullInfo"))
-        
+        dragArray.append(dragSection(xIn: (Int(clockFace.frame.minX)), yIn: (Int(clockFace.frame.minY)), widthIn:Int(clockFace.frame.width), heightIn:Int(clockFace.frame.height), functionNameIn:"inFullInfo"))
         // Do any additional setup after loading the view, typically from a nib.
         accessPlist().downloadImages()
+        
+        //download events
+        //saveAllEvents
+        let parameters = ["AccessToken":accessPlist().owner_get("access_token")! as String]
+        
+        twelvApi().Request("event_fetch", parameter: JSON(parameters), onCompletion: twelvApi().saveAllEvents)
+        
         fillWithEvents(mainView, events: accessPlist().all_events_get()!, function_name: "inEvent:")
+        view.bringSubviewToFront(createEvent)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setTime()
+        self.theTimer = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: Selector("setTime"), userInfo: nil, repeats: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -120,9 +141,16 @@ class ViewController: UIViewController, UITextFieldDelegate{
             if act=="inNewEventButton"{
                 inNewEventButton()
             }else{
+                minuteHand.hidden = true
                 hourHand.hidden = true
                 onClockTime.hidden = false
-                onClockTime.text = "\(drag().time(x,y:y, ac:accurracy))"
+                let hour = drag().time(x,y:y, ac:accurracy) / 100
+                let minute = drag().time(x,y:y, ac:accurracy) % 100
+                if (minute<10){
+                    onClockTime.text = "\(hour):0\(minute)"
+                }else{
+                    onClockTime.text = "\(hour):\(minute)"
+                }
             }
         default:
             if act != "nil" && act.substringToIndex(act.startIndex.advancedBy(7)) == "inEvent" && dragStart.substringToIndex(dragStart.startIndex.advancedBy(7)) == "inEvent"{
@@ -139,17 +167,18 @@ class ViewController: UIViewController, UITextFieldDelegate{
                 inNewEventButton()
                 nameCreate()
                 currentSlide=1
-                createEvent.layer.zPosition = 100;
+                //createEvent.layer.zPosition = 100;
             }else if dragStart != "nil" && dragStart.substringToIndex(dragStart.startIndex.advancedBy(7)) == "inEvent"{
                 if act=="inFullInfo"{
                     let button = UIButton()
                     button.setTitle(idCurrentEvent, forState: .Normal)
-                    print("inFullInfo: \(idCurrentEvent)")
                     inEvent(button)
                 }else{
                    //no longer looking at events
                     topInfoBar.text = "Grocery Shopping in 30mins"
-                    clockFace.hidden=false
+                    smallInfoView.hidden=true
+                    clockFace.image = UIImage(named: "clockFace.png")
+                    minuteHand.hidden = false
                     hourHand.hidden=false
                     for view in invitedFriends.subviews {
                         view.removeFromSuperview()
@@ -167,6 +196,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     }
     //clicking any of the three bottom buttons on the create new event page
     @IBAction func bottomBarClick(sender: AnyObject) {
+        print("me clicked")
         switch sender.tag{
         case 0:
             progressNewEvent(-1)
@@ -226,19 +256,20 @@ class ViewController: UIViewController, UITextFieldDelegate{
     
     //dragging reactions
     func inNewEventButton(){
+        minuteHand.hidden = false
         hourHand.hidden = false
         onClockTime.hidden = true
     }
     func inEvent(sender: AnyObject){
-        print("I'm released in \(sender.currentTitle!)")
         showFullEventInfo(sender.currentTitle!!)
     }
     func showFullEventInfo(id:String){
         //revert home
         topInfoBar.text = "Grocery Shopping in 30mins"
-        clockFace.hidden=false
+        smallInfoView.hidden = true
+        clockFace.image = UIImage(named: "clockFace.png")
+        minuteHand.hidden = false
         hourHand.hidden=false
-        onClockTime.hidden=false
         for view in invitedFriends.subviews {
             view.removeFromSuperview()
         }
@@ -246,13 +277,12 @@ class ViewController: UIViewController, UITextFieldDelegate{
         eventFullInfo.hidden=false
         self.view.bringSubviewToFront(eventFullInfo)
         let event = accessPlist().event_get(id)
-        print(event)
         titleFull.text = event?.objectForKey("title") as? String
         locationFull.text = event?.objectForKey("location") as? String
         descriptionFull.text = event?.objectForKey("description") as? String
         //show friends
         let relations = accessPlist().user_event_rel_get()
-        var usersInEvent: NSMutableDictionary = [:] as NSMutableDictionary
+        let usersInEvent: NSMutableDictionary = [:] as NSMutableDictionary
         for view in friendsFull.subviews {
             view.removeFromSuperview()
         }
@@ -261,14 +291,15 @@ class ViewController: UIViewController, UITextFieldDelegate{
                 usersInEvent.setValue(accessPlist().user_get((relation.objectForKey("user_id") as? String)!), forKey: (relation.objectForKey("user_id") as? String)!)
             }
         }
-        fillWithUsers(friendsFull, users: usersInEvent, function_name: nil, event_id: "nil")
+        fillWithUsers(friendsFull, users: usersInEvent, function_name: nil, event_id: id)
     }
     func overEvent(sender: AnyObject){
         let id: String = sender.currentTitle!!
-        print("I'm over \(id)")
         let event = accessPlist().event_get(id)
         //make visable
-        clockFace.hidden=true
+        smallInfoView.hidden = false
+        clockFace.image = UIImage(named: "clockFaceHollow.png")
+        minuteHand.hidden = true
         hourHand.hidden=true
         onClockTime.hidden=true
         //load info
@@ -277,7 +308,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
         descriptionText.text = event?.objectForKey("description") as? String
         //show friends
         let relations = accessPlist().user_event_rel_get()
-        var usersInEvent: NSMutableDictionary = [:] as NSMutableDictionary
+        let usersInEvent: NSMutableDictionary = [:] as NSMutableDictionary
         for view in invitedFriends.subviews {
             view.removeFromSuperview()
         }
@@ -286,8 +317,25 @@ class ViewController: UIViewController, UITextFieldDelegate{
                 usersInEvent.setValue(accessPlist().user_get((relation.objectForKey("user_id") as? String)!), forKey: (relation.objectForKey("user_id") as? String)!)
             }
         }
-        fillWithUsers(invitedFriends, users: usersInEvent, function_name: nil, event_id: "nil")
+        fillWithUsers(invitedFriends, users: usersInEvent, function_name: nil, event_id: id)
         
     }
-}
+    //making the clock a clock
+    func setTime(){
+        let date = NSDate()
+        let outputFormatter = NSDateFormatter()
+        outputFormatter.dateFormat = "hh"
+        var newString:NSString = outputFormatter.stringFromDate(date)
+        let hour = Int(newString as String)
 
+        outputFormatter.dateFormat = "mm"
+        newString = outputFormatter.stringFromDate(date)
+        let minute = Int(newString as String)
+
+        let minAngle = Double(6 * minute!) / 180.0 * Double(CGFloat(M_PI))
+        let hourAngle = Double(30 * hour! + minute! / 2) / 180.0 * Double(CGFloat(M_PI))
+    
+        minuteHand.transform = CGAffineTransformMakeRotation( CGFloat(Double(minAngle)) )
+        hourHand.transform = CGAffineTransformMakeRotation( CGFloat(hourAngle) )
+    }
+}

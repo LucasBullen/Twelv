@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>owner_info</key>
+	<dict>
+		<key>twelv_id</key>
+		<string></string>
+		<key>name</key>
+		<string></string>
+		<key>email</key>
+		<string></string>
+		<key>fb_id</key>
+		<string></string>
+		<key>device_id</key>
+		<string></string>
+		<key>access_token</key>
+		<string></string>
+	</dict>
 	<key>event_info</key>
 	<dict>
 		<key>0</key>
@@ -13,7 +28,7 @@
 			<key>description</key>
 			<string>description0</string>
 			<key>start_time</key>
-			<string>2015-11-19 6:00:00</string>
+			<string>2015-12-18 14:05:00</string>
 			<key>image</key>
 			<string>http://www.todayifoundout.com/wp-content/uploads/2010/03/kittens2-e1268293115429.jpg</string>
 		</dict>
@@ -26,7 +41,7 @@
 			<key>description</key>
 			<string>description1</string>
 			<key>start_time</key>
-			<string>2015-11-19 6:15:00</string>
+			<string>2015-12-18 14:01:00</string>
 			<key>image</key>
 			<string>http://www.momswhothink.com/images/stories/baby-names/female-cat-names.jpg</string>
 		</dict>
@@ -39,7 +54,7 @@
 			<key>description</key>
 			<string>description2</string>
 			<key>start_time</key>
-			<string>2015-11-19 6:30:00</string>
+			<string>2015-12-18 1:10:00</string>
 			<key>image</key>
 			<string>https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSQdAVaKjp65gMXjHehPZh-SeTeHfGggIY_mbKrUtp9i07t_wy73Q</string>
 		</dict>
@@ -52,7 +67,7 @@
 			<key>description</key>
 			<string>description3</string>
 			<key>start_time</key>
-			<string>2015-11-19 6:45:00</string>
+			<string>2015-12-18 12:57:00</string>
 			<key>image</key>
 			<string>http://www.aaj.tv/wp-content/uploads/2015/08/bullet_cat1.jpg</string>
 		</dict>

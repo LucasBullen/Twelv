@@ -88,6 +88,13 @@
                   "useful when determining if a user is logged in, returning an empty object when there's no session"
                ),
                new Endpoint(
+                  "none", 
+                  "session_create", 
+                  "the facebook login status json",
+                  "yes or error",
+                  "see <a href='https://developers.facebook.com/docs/facebook-login/web#checklogin'>this</a> though there is likely something more relevant for apps"
+               ),
+               new Endpoint(
                   "valid login session", 
                   "events_fetch", 
                   "none",
@@ -114,7 +121,7 @@
                   "none",
                   "json array of facebook friends",
                   ""
-               )
+               ),
             );
             
             foreach ($endpoints as $endpoint) {

@@ -27,6 +27,11 @@
 		A0C4EFB01BEFC79D001AA4F4 /* circlesLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */; };
 		A0C6F39D1BFCC5DD0003E323 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C6F39C1BFCC5DD0003E323 /* SwiftyJSON.swift */; };
 		A0C6F39F1BFCC5ED0003E323 /* user_event_rel.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0C6F39E1BFCC5ED0003E323 /* user_event_rel.plist */; };
+		A0E5108A1C207137002BCEB2 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E510891C207137002BCEB2 /* CircleButton.swift */; };
+		A0E5108F1C20F878002BCEB2 /* long.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E5108E1C20F878002BCEB2 /* long.png */; };
+		A0E510971C20FAFA002BCEB2 /* short.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E510961C20FAFA002BCEB2 /* short.png */; };
+		A0E5109B1C20FFC4002BCEB2 /* clockFace.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E5109A1C20FFC4002BCEB2 /* clockFace.png */; };
+		A0E5109D1C214121002BCEB2 /* clockFaceHollow.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E5109C1C214121002BCEB2 /* clockFaceHollow.png */; };
 		A0EA21B61BDEB07A007E68A5 /* dragBuildObjects.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +79,11 @@
 		A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = circlesLoad.swift; sourceTree = "<group>"; };
 		A0C6F39C1BFCC5DD0003E323 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		A0C6F39E1BFCC5ED0003E323 /* user_event_rel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = user_event_rel.plist; sourceTree = "<group>"; };
+		A0E510891C207137002BCEB2 /* CircleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		A0E5108E1C20F878002BCEB2 /* long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = long.png; sourceTree = "<group>"; };
+		A0E510961C20FAFA002BCEB2 /* short.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = short.png; sourceTree = "<group>"; };
+		A0E5109A1C20FFC4002BCEB2 /* clockFace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clockFace.png; sourceTree = "<group>"; };
+		A0E5109C1C214121002BCEB2 /* clockFaceHollow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clockFaceHollow.png; sourceTree = "<group>"; };
 		A0EA21B51BDEB07A007E68A5 /* dragBuildObjects.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = dragBuildObjects.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +118,7 @@
 		A0AF98FB1BC0A96500F81B7E = {
 			isa = PBXGroup;
 			children = (
+				A0E5108B1C20F73C002BCEB2 /* images */,
 				013B56131BED3E370047ADD5 /* Default-568h@2x.png */,
 				A0AF99061BC0A96500F81B7E /* iOSTwelv */,
 				A0AF991B1BC0A96500F81B7E /* iOSTwelvTests */,
@@ -148,6 +159,7 @@
 				A0038F6F1BED11F100DB968D /* plistBrain.swift */,
 				A0C6F39E1BFCC5ED0003E323 /* user_event_rel.plist */,
 				A0C4EFAF1BEFC79D001AA4F4 /* circlesLoad.swift */,
+				A0E510891C207137002BCEB2 /* CircleButton.swift */,
 			);
 			path = iOSTwelv;
 			sourceTree = "<group>";
@@ -168,6 +180,17 @@
 				A0AF99291BC0A96500F81B7E /* Info.plist */,
 			);
 			path = iOSTwelvUITests;
+			sourceTree = "<group>";
+		};
+		A0E5108B1C20F73C002BCEB2 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				A0E5109C1C214121002BCEB2 /* clockFaceHollow.png */,
+				A0E5109A1C20FFC4002BCEB2 /* clockFace.png */,
+				A0E510961C20FAFA002BCEB2 /* short.png */,
+				A0E5108E1C20F878002BCEB2 /* long.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,12 +297,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0C6F39F1BFCC5ED0003E323 /* user_event_rel.plist in Resources */,
+				A0E510971C20FAFA002BCEB2 /* short.png in Resources */,
+				A0E5108F1C20F878002BCEB2 /* long.png in Resources */,
 				A0038F6C1BED09E800DB968D /* data.plist in Resources */,
 				A0EA21B61BDEB07A007E68A5 /* dragBuildObjects.strings in Resources */,
 				A0AF99121BC0A96500F81B7E /* LaunchScreen.storyboard in Resources */,
 				A0AF990F1BC0A96500F81B7E /* Assets.xcassets in Resources */,
+				A0E5109D1C214121002BCEB2 /* clockFaceHollow.png in Resources */,
 				013B56141BED3E370047ADD5 /* Default-568h@2x.png in Resources */,
 				A0AF990D1BC0A96500F81B7E /* Main.storyboard in Resources */,
+				A0E5109B1C20FFC4002BCEB2 /* clockFace.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +336,7 @@
 				A0AF990A1BC0A96500F81B7E /* ViewController.swift in Sources */,
 				A0C6F39D1BFCC5DD0003E323 /* SwiftyJSON.swift in Sources */,
 				A0038F701BED11F100DB968D /* plistBrain.swift in Sources */,
+				A0E5108A1C207137002BCEB2 /* CircleButton.swift in Sources */,
 				A0AF99081BC0A96500F81B7E /* AppDelegate.swift in Sources */,
 				013B56121BED3B940047ADD5 /* SplashViewController.swift in Sources */,
 				010BAEEF1BF1BD59001FC0C8 /* TwelvApi.swift in Sources */,

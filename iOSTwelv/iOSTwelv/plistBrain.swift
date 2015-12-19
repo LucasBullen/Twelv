@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import SystemConfiguration
+
 //logic for calling the Plist
 class accessPlist {
 //getters
@@ -287,7 +289,7 @@ class accessPlist {
         }else{
             if let privPath = NSBundle.mainBundle().pathForResource("data", ofType: "plist"){
                 if let dict = NSMutableDictionary(contentsOfFile: privPath){
-                    dict.objectForKey("user_info")!.setObject(newUser(), forKey: id)
+                    dict.objectForKey("user_info")!.objectForKey(id)!.setObject(value, forKey: id)
                     if dict.writeToFile(path, atomically: true){
                         print("plist_write")
                     }else{
@@ -341,7 +343,162 @@ class accessPlist {
             }
         }
     }
-
+//deletors
+    //Events
+    func event_delete(id: String) {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("data.plist")
+        
+        if let dict = NSMutableDictionary(contentsOfFile: path){
+            dict.objectForKey("event_info")!.removeObjectForKey(id)
+            if dict.writeToFile(path, atomically: true){
+                print("plist_write")
+            }else{
+                print("plist_write_error")
+            }
+        }else{
+            if let privPath = NSBundle.mainBundle().pathForResource("data", ofType: "plist"){
+                if let dict = NSMutableDictionary(contentsOfFile: privPath){
+                    dict.objectForKey("event_info")!.removeObjectForKey(id)
+                    if dict.writeToFile(path, atomically: true){
+                        print("plist_write")
+                    }else{
+                        print("plist_write_error")
+                    }
+                }else{
+                    print("plist_write")
+                }
+            }else{
+                print("error_find_plist")
+            }
+        }
+    }
+    //Users
+    func user_delete(id: String) {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("data.plist")
+        
+        if let dict = NSMutableDictionary(contentsOfFile: path){
+            dict.objectForKey("user_info")!.removeObjectForKey(id)
+            if dict.writeToFile(path, atomically: true){
+                print("plist_write")
+            }else{
+                print("plist_write_error")
+            }
+        }else{
+            if let privPath = NSBundle.mainBundle().pathForResource("data", ofType: "plist"){
+                if let dict = NSMutableDictionary(contentsOfFile: privPath){
+                    dict.objectForKey("user_info")!.removeObjectForKey(id)
+                    if dict.writeToFile(path, atomically: true){
+                        print("plist_write")
+                    }else{
+                        print("plist_write_error")
+                    }
+                }else{
+                    print("plist_write")
+                }
+            }else{
+                print("error_find_plist")
+            }
+        }
+    }
+    //User Event Rel
+    func user_event_rel_delete(user_id:String, event_id: String) {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("user_event_rel.plist")
+        
+        if let ary = NSMutableArray(contentsOfFile: path) {
+            for var i = 0; i < ary.count; ++i{
+                if ary[i]["user_id"] as! String==user_id && ary[i]["event_id"] as! String==event_id{
+                    ary.removeObjectAtIndex(i)
+                    print("plist_adjusted")
+                }
+            }
+            if ary.writeToFile(path, atomically: true){
+                print("plist_write")
+            }else{
+                print("plist_write_error")
+            }
+        }else{
+            if let privPath = NSBundle.mainBundle().pathForResource("user_event_rel", ofType: "plist"){
+                if let ary = NSMutableArray(contentsOfFile: privPath){
+                    for var i = 0; i < ary.count; ++i{
+                        if ary[i]["user_id"] as! String==user_id && ary[i]["event_id"] as! String==event_id{
+                            ary.removeObjectAtIndex(i)
+                            print("plist_adjusted")
+                        }
+                    }
+                    if ary.writeToFile(path, atomically: true){
+                        print("plist_write")
+                    }else{
+                        print("plist_write_error")
+                    }
+                }else{
+                    print("plist_write")
+                }
+            }else{
+                print("error_find_plist")
+            }
+        }
+    }
+//for the owner informaiton
+    func owner_get(key:String)->String?{
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("data.plist")
+        
+        if let dict = NSMutableDictionary(contentsOfFile: path){
+            return dict.objectForKey("owner_info")!.objectForKey(key)! as? String
+        }else{
+            if let privPath = NSBundle.mainBundle().pathForResource("data", ofType: "plist"){
+                if let dict = NSMutableDictionary(contentsOfFile: privPath){
+                    if let info = dict.objectForKey("owner_info")!.objectForKey(key){
+                        return info as? String
+                    }else{
+                        print("error_read_2")
+                    }
+                }else{
+                    print("error_read")
+                }
+            }else{
+                print("error_read")
+            }
+        }
+        return nil
+    }
+    func owner_edit(field:String, value:String) {
+        print("f:\(field) v:\(value)")
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("data.plist")
+        
+        if let dict = NSMutableDictionary(contentsOfFile: path){
+            dict.objectForKey("owner_info")!.setObject(value, forKey: field)
+            if dict.writeToFile(path, atomically: true){
+                print("plist_write")
+            }else{
+                print("plist_write_error")
+            }
+        }else{
+            if let privPath = NSBundle.mainBundle().pathForResource("data", ofType: "plist"){
+                if let dict = NSMutableDictionary(contentsOfFile: privPath){
+                    dict.objectForKey("owner_info")!.setObject(value, forKey: value)
+                    if dict.writeToFile(path, atomically: true){
+                        print("plist_write")
+                    }else{
+                        print("plist_write_error")
+                    }
+                }else{
+                    print("plist_write")
+                }
+            }else{
+                print("error_find_plist")
+            }
+        }
+    }
     
 //fake builds for testing
     func newEvent()->NSDictionary{
@@ -388,8 +545,8 @@ class accessPlist {
 class Save {
     func image(key:String, url:String) {
         print("checking for \(key)'s image")
-        if (Load().image(key) == nil){
-            print("downloaded \(key)'s image")
+        if (Load().image(key) == nil && Reachability().isConnectedToNetwork()){
+            print("downloading \(key)'s image")
             let nsURL = NSURL(string:url)!
             let content = NSData(contentsOfURL:nsURL)!
             let image = UIImage(data: content)!
@@ -405,5 +562,24 @@ class Load {
             return UIImage(data: ( NSUserDefaults.standardUserDefaults().objectForKey(key) as! NSData))
         }
         return nil
+    }
+}
+
+class Reachability {
+    
+   func isConnectedToNetwork()->Bool{
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
+            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        }
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+        return (isReachable && !needsConnection)
     }
 }

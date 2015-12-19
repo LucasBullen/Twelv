@@ -22,9 +22,6 @@ extension ViewController{
         if currentSlide > slidesRequired{
             enableCreate()
         }
-        if currentSlide > totalSlides{
-            createNewEvent()
-        }
         switch currentSlide{
         case 1:
             nameCreate()
@@ -75,7 +72,18 @@ extension ViewController{
         currentSlide = 1;
         createEvent.hidden=true
         self.view.endEditing(true)
+        
+        //send event to the db
+        let CreateTime = NSDate().timeIntervalSince1970
+        let parameters = ["AccessToken":accessPlist().owner_get("access_token")! as String,"Name":eventTitle, "Description":eventDescription,"StartTime":eventTime,"CreateTime":CreateTime,"Location":eventLocation,"Friends":JSON(eventFriends).stringValue]
+        twelvApi().Request("event_create", parameter: JSON(parameters), onCompletion: saveEventInPlist)
     }
+    
+    func saveEventInPlist(returned:JSON){
+        print(returned)
+        //accessPlist().event_create(String, location: S, title: S, description: S, start_time: S)
+    }
+    
     func addUserToEvent(sender: AnyObject){
         let userID = sender.titleLabel!!.text!
         if let index = eventFriends.indexOf(userID) {
