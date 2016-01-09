@@ -38,8 +38,8 @@ public class CreateEventTitle extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View view){
-        Intent intent = new Intent(this, CreateEventLocation.class);
-        startActivity(intent);
+    public void toFriends(View view){
+        Intent createEventFriends = new Intent(this, CreateEventFriends.class);
+        startActivity(createEventFriends);
     }
 }
