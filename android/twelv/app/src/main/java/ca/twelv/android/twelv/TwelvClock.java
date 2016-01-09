@@ -1,6 +1,8 @@
 package ca.twelv.android.twelv;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +13,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static android.app.Activity.*;
 
 public class TwelvClock extends View {
     private final int clockRadius;
@@ -148,13 +152,9 @@ public class TwelvClock extends View {
 
             @Override
             public void finished(MotionEvent event, int touchIndex) {
-                /*
-
-                HANDLE CREATE EVENT HERE
-
-                */
-
-                cancelled(event, touchIndex);
+                Intent createEventIntent = new Intent(getContext(), CreateEvent.class);
+                ((Activity)getContext()).startActivity(createEventIntent);
+               // cancelled(event, touchIndex);
             }
 
             @Override
