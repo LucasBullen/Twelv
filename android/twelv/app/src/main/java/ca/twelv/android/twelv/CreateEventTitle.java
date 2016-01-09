@@ -1,6 +1,7 @@
 package ca.twelv.android.twelv;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +39,7 @@ public class CreateEventTitle extends Activity {
     }
 
     public void sendMessage(View view){
-
+        Intent intent = new Intent(this, CreateEventLocation.class);
+        startActivity(intent);
     }
 }
