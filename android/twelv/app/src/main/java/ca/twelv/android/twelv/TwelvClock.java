@@ -31,15 +31,11 @@ public class TwelvClock extends View {
     private DrawableEntity newEvent;
     private DrawableEntity emptyEvent;
 
-    // Store context in order to switch to create event
-    private Context parentContext;
-
     public TwelvClock(Context context, TouchHandler touchHandler, LinearLayout layout, final int swidth, int sheight) {
         super(context);
         setFocusable(true);
         setFocusableInTouchMode(true);
 
-        this.parentContext = context;
         this.touchHandler = touchHandler;
         this.paint = new Paint();
 
@@ -153,8 +149,8 @@ public class TwelvClock extends View {
 
             @Override
             public void finished(MotionEvent event, int touchIndex) {
-                Intent createEventIntent = new Intent(parentContext, CreateEvent.class);
-                parentContext.startActivity(createEventIntent);
+                Intent createEventIntent = new Intent(getContext(), CreateEventTitle.class);
+                getContext().startActivity(createEventIntent);
 
                 //cancelled(event, touchIndex);
             }
