@@ -19,6 +19,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Base64;
 import android.util.Log;
@@ -27,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -132,6 +135,44 @@ public class TwelvAPI {
         Log.d("twelvdebug", "Key : " + key);
 
         return key;
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setInstanceFollowRedirects(true);
+            //connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
+    }
+
+    public static abstract class BitmapFromURL extends AsyncTaskCallback.TaskCallback {
+        public abstract void callback(Bitmap bitmap);
+        private String source;
+
+        public BitmapFromURL(String source) {
+            this.source = source;
+
+            new AsyncTaskCallback(this).start();
+        }
+
+        @Override
+        public Object task() {
+            return TwelvAPI.getBitmapFromURL(source);
+        }
+
+        @Override
+        public void callback(Object result) {
+            this.callback((Bitmap) result);
+        }
     }
 
     public static abstract class BitmapCircleCrop extends AsyncTaskCallback.TaskCallback {

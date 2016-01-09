@@ -2,7 +2,6 @@ package ca.twelv.android.twelv;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -100,11 +99,25 @@ public class TwelvClock extends View {
         emptyEvent = new DrawableEntity(0, 0, eventRadius) {
             // create empty bitmap
             private Bitmap image = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-            TwelvAPI.BitmapCircleCrop loadImage = new TwelvAPI.BitmapCircleCrop(BitmapFactory.decodeResource(getResources(), R.drawable.temp), eventRadius*2) {
+
+            /*TwelvAPI.BitmapCircleCrop loadImage = new TwelvAPI.BitmapCircleCrop(BitmapFactory.decodeResource(getResources(), R.drawable.temp), eventRadius*2) {
                 @Override
                 public void callback(Bitmap bitmap) {
                     image = bitmap;
                     invalidate();
+                }
+            };*/
+
+            TwelvAPI.BitmapFromURL loadImage = new TwelvAPI.BitmapFromURL("https://graph.facebook.com/10206264905515132/picture?type=large") {
+                @Override
+                public void callback(Bitmap bitmap) {
+                    TwelvAPI.BitmapCircleCrop loadImage = new TwelvAPI.BitmapCircleCrop(bitmap, eventRadius*2) {
+                        @Override
+                        public void callback(Bitmap bitmap) {
+                            image = bitmap;
+                            invalidate();
+                        }
+                    };
                 }
             };
 
