@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 public class CreateEventTitle extends Activity {
+
+    public final static String EXTRA_MESSAGE = "ca.twelv.android.twelv.MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,9 @@ public class CreateEventTitle extends Activity {
 
     public void toFriends(View view){
         Intent createEventFriends = new Intent(this, CreateEventFriends.class);
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String message = editText.getText().toString();
+        createEventFriends.putExtra(EXTRA_MESSAGE, message);
         startActivity(createEventFriends);
     }
 }

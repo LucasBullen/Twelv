@@ -38,8 +38,8 @@ public class CreateEventLocation extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void toClock(View view){
-        Intent homeIntent = new Intent(this, Home.class);
-        startActivity(homeIntent);
+    public void toDescription(View view){
+        Intent createEventDesc = new Intent(this, CreateEventDescription.class);
+        startActivity(createEventDesc);
     }
 }

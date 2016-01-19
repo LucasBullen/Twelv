@@ -18,5 +18,5 @@
         android:text="Next"
         android:id="@+id/button4"
         android:layout_gravity="center_horizontal"
-        android:onClick="toLocation"/>
+        android:onClick="toHome"/>
 </LinearLayout>

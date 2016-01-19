@@ -16,5 +16,5 @@
         android:text="Next"
         android:id="@+id/button3"
         android:layout_gravity="center_horizontal"
-        android:onClick="toDescription"/>
+        android:onClick="toLocation"/>
 </LinearLayout>

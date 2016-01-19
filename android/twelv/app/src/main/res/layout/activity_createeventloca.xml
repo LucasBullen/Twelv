@@ -16,5 +16,5 @@
         android:text="Next"
         android:id="@+id/button2"
         android:layout_gravity="center_horizontal"
-        android:onClick="toClock"/>
+        android:onClick="toDescription"/>
 </LinearLayout>

@@ -38,8 +38,8 @@ public class CreateEventFriends extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void toDescription(View view){
-        Intent createEventDesc = new Intent(this, CreateEventDescription.class);
-        startActivity(createEventDesc);
+    public void toLocation(View view){
+        Intent createEventLoca = new Intent(this, CreateEventLocation.class);
+        startActivity(createEventLoca);
     }
 }

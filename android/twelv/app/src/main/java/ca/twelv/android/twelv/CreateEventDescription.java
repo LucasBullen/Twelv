@@ -38,8 +38,8 @@ public class CreateEventDescription extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void toLocation(View view){
-        Intent createEventLoca = new Intent(this, CreateEventLocation.class);
-        startActivity(createEventLoca);
+    public void toHome(View view){
+        Intent homeIntent = new Intent(this, Home.class);
+        startActivity(homeIntent);
     }
 }
