@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 public class CreateEventFriends extends Activity{
     @Override
@@ -40,6 +41,11 @@ public class CreateEventFriends extends Activity{
 
     public void toLocation(View view){
         Intent createEventLoca = new Intent(this, CreateEventLocation.class);
+        Intent intent = getIntent();
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String eventInfo[] = intent.getStringArrayExtra("title");
+        eventInfo[1] = editText.getText().toString();
+        createEventLoca.putExtra("friends", eventInfo);
         startActivity(createEventLoca);
     }
 }

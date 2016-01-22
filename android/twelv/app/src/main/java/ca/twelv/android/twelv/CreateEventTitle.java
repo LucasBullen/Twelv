@@ -43,10 +43,11 @@ public class CreateEventTitle extends Activity {
     }
 
     public void toFriends(View view){
+        String eventInfo[] = new String[4];
         Intent createEventFriends = new Intent(this, CreateEventFriends.class);
         EditText editText = (EditText) findViewById(R.id.editText);
-        String message = editText.getText().toString();
-        createEventFriends.putExtra(EXTRA_MESSAGE, message);
+        eventInfo[0] = editText.getText().toString();
+        createEventFriends.putExtra("title", eventInfo);
         startActivity(createEventFriends);
     }
 }
